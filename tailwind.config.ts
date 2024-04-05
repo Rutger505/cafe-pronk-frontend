@@ -22,6 +22,10 @@ const config: Config = {
       lg: "1.125rem",
       xl: "1.25rem",
     },
+    boxShadow: {
+      standard:
+        "0px 2px 6px 0px rgba(0, 0, 0, .04), 0px 8px 12px -2px rgba(0, 0, 0, .06), 0px 4px 6px 0px rgba(0, 0, 0, .04)",
+    },
   },
   plugins: [],
 };

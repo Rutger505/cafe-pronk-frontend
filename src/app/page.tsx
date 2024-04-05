@@ -1,10 +1,5 @@
 export default function Home() {
-
-
-
   return (
-    <main className=" min-h-screen flex-col items-center justify-between p-24">
-
-    </main>
+    <main className="row-auto flex-col items-center justify-between p-24"></main>
   );
 }
