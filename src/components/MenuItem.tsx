@@ -12,13 +12,13 @@ export default function MenuItem({
   return (
     <div
       className={
-        "flex justify-between rounded-xl p-5 outline outline-2 outline-secondary"
+        "rounded-normal flex justify-between p-5 outline outline-2 outline-secondary"
       }
     >
-      <div>
-        <h3>{item.name}</h3>
-        <p>{item.description}</p>
-        <p>€{item.price}</p>
+      <div className={"flex flex-col gap-1"}>
+        <h3 className={"text-md font-bold"}>{item.name}</h3>
+        <p className={"text-sm text-tertiary"}>{item.description}</p>
+        <p className={"text-md font-bold"}>€{item.price}</p>
       </div>
       <button onClick={() => onAddToCart(item)}>Add to Cart</button>
     </div>

@@ -15,9 +15,9 @@ export default function MenuCategory({
   onAddToCart,
 }: Readonly<MenuCategoryProps>) {
   return (
-    <div>
-      <h2 className={"mt-10 text-lg font-bold"}>{name}</h2>
-      <ul className={"flex flex-col gap-y-3"}>
+    <div className={"flex flex-col gap-5"}>
+      <h2 className={"text-lg font-bold"}>{name}</h2>
+      <ul className={"flex flex-col gap-5"}>
         {items.map((item) => (
           <MenuItem key={item.id} item={item} onAddToCart={onAddToCart} />
         ))}

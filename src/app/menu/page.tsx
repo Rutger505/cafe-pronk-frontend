@@ -80,18 +80,20 @@ export default function Menu() {
   }
 
   return (
-    <main className="row-auto flex-col items-center justify-between p-24">
-      <h1 className={"mb-20 text-center text-xl"}>Menu</h1>
-      <div className={"flex max-w-4xl flex-col justify-center"}>
-        {menu.map((category) => (
-          <MenuCategory
-            key={category.id}
-            id={category.id}
-            name={category.name}
-            items={category.items}
-            onAddToCart={addToCart}
-          />
-        ))}
+    <main className="">
+      <div className={"flex max-w-5xl flex-col px-5 py-12 md:px-24 "}>
+        <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
+        <div className={"flex flex-col gap-14"}>
+          {menu.map((category) => (
+            <MenuCategory
+              key={category.id}
+              id={category.id}
+              name={category.name}
+              items={category.items}
+              onAddToCart={addToCart}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
