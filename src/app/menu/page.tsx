@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import Basket from "@/components/Basket";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useState } from "react";
 
 export interface MenuCategoryData {
   id: string;
@@ -78,8 +79,11 @@ export default function Menu() {
     },
   ];
 
+  const [cartItems, setCartItems] = useState<MenuItemData[]>([]);
+
   function addToCart(item: MenuItemData) {
     console.log("Added to cart:", JSON.stringify(item));
+    setCartItems([...cartItems, item]);
   }
 
   return (
@@ -104,7 +108,7 @@ export default function Menu() {
         </div>
         <Footer />
       </div>
-      <Basket />
+      <Basket items={cartItems} />
     </div>
   );
 }
