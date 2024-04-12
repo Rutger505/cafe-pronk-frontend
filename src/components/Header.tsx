@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header
       className={
-        "flex h-16 items-center justify-between bg-primary px-10 shadow-standard"
+        "shadow-bottom flex h-16 items-center justify-between bg-primary px-10"
       }
     >
       <Link href={"/"}>

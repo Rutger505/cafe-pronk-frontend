@@ -21,7 +21,7 @@ export default function Basket({
   return (
     <div
       className={
-        "sticky top-0 flex h-screen w-80 flex-col items-center gap-5 p-5"
+        "shadow-left sticky top-0 flex h-screen w-80 flex-col items-center gap-5 p-5"
       }
     >
       <h2 className={"my-5 text-center text-lg font-bold"}>Basket</h2>
