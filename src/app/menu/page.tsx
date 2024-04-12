@@ -37,27 +37,7 @@ export default function Menu() {
     console.log("Fetching menu from:", apiUri);
     fetch(apiUri)
       .then((response) => response.json())
-      .then((data: any) => {
-        console.log("Menu data:", data.categories);
-
-        // Parse API data into CategoryData array
-        const parsedMenuCategories: CategoryData[] = data.categories.map(
-          (category: any) => ({
-            id: category.id,
-            name: category.name,
-            dishes: category.dishes.map((dish: any) => ({
-              id: dish.id,
-              name: dish.name,
-              description: dish.description,
-              price: dish.price,
-              positionIndex: dish.position_index,
-            })),
-            positionIndex: category.position_index,
-          }),
-        );
-
-        setMenuCategories(parsedMenuCategories);
-      })
+      .then((data: any) => setMenuCategories(data.categories))
       .catch((error) => {
         console.error("Error fetching menu:", error);
       });
