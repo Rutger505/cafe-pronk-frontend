@@ -15,7 +15,7 @@ export default function HeaderLink(props: Readonly<HeaderLinkProps>) {
 
   return (
     <Link
-      className={`${className} ${href === path && "bg-secondary"} rounded-2xl px-3 py-1 hover:bg-secondary`}
+      className={`${className} ${href === path && "bg-secondary"} rounded-button px-3 py-1 text-sm hover:bg-secondary`}
       href={href}
       {...rest}
     >

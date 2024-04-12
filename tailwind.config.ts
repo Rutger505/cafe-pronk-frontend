@@ -16,15 +16,19 @@ const config: Config = {
       "homepage-gray": " #F5F3F1",
     },
     fontSize: {
-      xs: "0.75rem",
-      sm: "0.875rem",
-      md: "1rem",
-      lg: "1.125rem",
-      xl: "1.25rem",
+      xs: "14px",
+      sm: "16px",
+      md: "20px",
+      lg: "24px",
+      xl: "32px",
     },
     boxShadow: {
       standard:
         "0px 2px 6px 0px rgba(0, 0, 0, .04), 0px 8px 12px -2px rgba(0, 0, 0, .06), 0px 4px 6px 0px rgba(0, 0, 0, .04)",
+    },
+    borderRadius: {
+      normal: "12px",
+      button: "9999px",
     },
   },
   plugins: [],
