@@ -20,6 +20,11 @@ export interface MenuItemData {
   price: number;
 }
 
+export interface BasketMenuItemData {
+  item: MenuItemData;
+  quantity: number;
+}
+
 export default function Menu() {
   // Get Menu JSON from API
   const menu: MenuCategoryData[] = [
@@ -31,13 +36,13 @@ export default function Menu() {
           id: uuidv4(),
           name: "Nachos",
           description: "Tortilla chips with cheese, jalapenos, and salsa",
-          price: 6.5,
+          price: 6.52,
         },
         {
           id: uuidv4(),
           name: "Garlic Bread",
           description: "Toasted ciabatta with garlic butter",
-          price: 4.5,
+          price: 4,
         },
       ],
     },
@@ -49,7 +54,7 @@ export default function Menu() {
           id: uuidv4(),
           name: "Pizza",
           description: "Tomato and cheese on a thin base",
-          price: 10.5,
+          price: 9.99,
         },
         {
           id: uuidv4(),
@@ -79,11 +84,41 @@ export default function Menu() {
     },
   ];
 
-  const [cartItems, setCartItems] = useState<MenuItemData[]>([]);
+  const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
 
   function addToCart(item: MenuItemData) {
     console.log("Added to cart:", JSON.stringify(item));
-    setCartItems([...cartItems, item]);
+
+    setCartItems([...cartItems, { item, quantity: 1 }]);
+  }
+
+  function removeFromCart(item: BasketMenuItemData) {
+    console.log("Removed from cart:", JSON.stringify(item));
+    setCartItems(cartItems.filter((cartItem) => cartItem !== item));
+  }
+
+  function changeBasketItemQuantity(
+    item: BasketMenuItemData,
+    quantityChange: number,
+  ) {
+    setCartItems(
+      cartItems.map((cartItem) => {
+        if (cartItem.item === item.item) {
+          return { ...cartItem, quantity: cartItem.quantity + quantityChange };
+        }
+        return cartItem;
+      }),
+    );
+  }
+
+  function onDecrementItem(item: BasketMenuItemData) {
+    console.log("Decremented item:", JSON.stringify(item));
+    changeBasketItemQuantity(item, -1);
+  }
+
+  function onIncrementItem(item: BasketMenuItemData) {
+    console.log("Incremented item:", JSON.stringify(item));
+    changeBasketItemQuantity(item, 1);
   }
 
   return (
@@ -108,7 +143,12 @@ export default function Menu() {
         </div>
         <Footer />
       </div>
-      <Basket items={cartItems} />
+      <Basket
+        items={cartItems}
+        onRemoveFromCart={removeFromCart}
+        onDecrementItem={onDecrementItem}
+        onIncrementItem={onIncrementItem}
+      />
     </div>
   );
 }
