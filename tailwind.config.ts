@@ -23,8 +23,9 @@ const config: Config = {
       xl: "32px",
     },
     boxShadow: {
-      standard:
+      bottom:
         "0px 2px 6px 0px rgba(0, 0, 0, .04), 0px 8px 12px -2px rgba(0, 0, 0, .06), 0px 4px 6px 0px rgba(0, 0, 0, .04)",
+      left: "-4px 0px 6px 0px rgba(0, 0, 0, .04)",
     },
     borderRadius: {
       normal: "12px",

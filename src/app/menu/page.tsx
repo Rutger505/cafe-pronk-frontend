@@ -2,8 +2,6 @@
 
 import MenuCategory from "@/components/MenuCatagory";
 import Basket from "@/components/Basket";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import { useEffect, useState } from "react";
 
 export interface CategoryData {
@@ -93,24 +91,20 @@ export default function Menu() {
   }
 
   return (
-    <div className={"flex"}>
-      <div className={"flex flex-1 flex-col"}>
-        <div className={"min-h-screen"}>
-          <Header />
-          <main className="flex max-w-5xl flex-col px-5 py-12 md:px-24">
-            <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
-            <ul className={"flex flex-col gap-14"}>
-              {menuCategories.map((category) => (
-                <MenuCategory
-                  key={category.id}
-                  category={category}
-                  onAddToCart={addToCart}
-                />
-              ))}
-            </ul>
-          </main>
+    <main className={"flex"}>
+      <div className="flex flex-1 justify-center px-5 py-12 md:px-24">
+        <div className={"flex max-w-5xl flex-1 flex-col justify-between "}>
+          <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
+          <ul className={"flex flex-col gap-14"}>
+            {menuCategories.map((category) => (
+              <MenuCategory
+                key={category.id}
+                category={category}
+                onAddToCart={addToCart}
+              />
+            ))}
+          </ul>
         </div>
-        <Footer />
       </div>
       <Basket
         items={cartItems}
@@ -119,6 +113,6 @@ export default function Menu() {
         onIncrementItem={onIncrementItem}
         onCheckout={onCheckout}
       />
-    </div>
+    </main>
   );
 }

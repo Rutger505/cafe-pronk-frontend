@@ -12,7 +12,7 @@ export default function TransferMethodSwitch() {
   );
 
   return (
-    <div className={"rounded-button flex h-12 w-fit bg-secondary p-[2px]"}>
+    <div className={"flex w-fit rounded-button bg-secondary p-[2px]"}>
       <TransferMethod
         method={"Delivery"}
         estimatedTime={"30-40 min"}
