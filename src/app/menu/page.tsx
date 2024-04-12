@@ -140,9 +140,7 @@ export default function Menu() {
               {menu.map((category) => (
                 <MenuCategory
                   key={category.id}
-                  id={category.id}
-                  name={category.name}
-                  items={category.items}
+                  category={category}
                   onAddToCart={addToCart}
                 />
               ))}
