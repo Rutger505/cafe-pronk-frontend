@@ -8,7 +8,6 @@ export interface CategoryData {
   id: number;
   name: string;
   dishes: DishData[];
-  positionIndex: number;
 }
 
 export interface DishData {
@@ -16,7 +15,6 @@ export interface DishData {
   name: string;
   description: string;
   price: number;
-  positionIndex: number;
 }
 
 export interface BasketMenuItemData {
@@ -35,7 +33,21 @@ export default function Menu() {
     console.log("Fetching menu from:", apiUri);
     fetch(apiUri)
       .then((response) => response.json())
-      .then((data: any) => setMenuCategories(data.categories))
+      .then((data: any) => {
+        // sort the categories by position_index
+        data.categories = data.categories.sort(
+          (a: any, b: any) => a.position_index - b.position_index,
+        );
+
+        // sort the dishes by position_index
+        data.categories.forEach((category: any) => {
+          category.dishes = category.dishes.sort(
+            (a: any, b: any) => a.position_index - b.position_index,
+          );
+        });
+
+        setMenuCategories(data.categories);
+      })
       .catch((error) => {
         console.error("Error fetching menu:", error);
       });
