@@ -8,6 +8,7 @@ interface BasketProps {
   onRemoveFromCart: (item: BasketMenuItemData) => void;
   onDecrementItem: (item: BasketMenuItemData) => void;
   onIncrementItem: (item: BasketMenuItemData) => void;
+  onCheckout: () => void;
 }
 
 export default function Basket({
@@ -15,6 +16,7 @@ export default function Basket({
   onRemoveFromCart,
   onDecrementItem,
   onIncrementItem,
+  onCheckout,
 }: Readonly<BasketProps>) {
   return (
     <div
@@ -44,6 +46,7 @@ export default function Basket({
               (acc, item) => acc + item.item.price * item.quantity,
               0,
             )}
+            onCheckout={onCheckout}
           />
         </>
       ) : (

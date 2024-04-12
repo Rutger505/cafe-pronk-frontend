@@ -1,9 +1,9 @@
 import MenuItem from "@/components/MenuItem";
-import { MenuCategoryData, MenuItemData } from "@/app/menu/page";
+import { CategoryData, DishData } from "@/app/menu/page";
 
 interface MenuCategoryProps {
-  category: MenuCategoryData;
-  onAddToCart: (id: MenuItemData) => void;
+  category: CategoryData;
+  onAddToCart: (id: DishData) => void;
 }
 
 export default function MenuCategory({
@@ -14,7 +14,7 @@ export default function MenuCategory({
     <div className={"flex flex-col gap-5"}>
       <h2 className={"text-lg font-bold"}>{category.name}</h2>
       <ul className={"flex flex-col gap-5"}>
-        {category.items.map((item) => (
+        {category.dishes.map((item) => (
           <MenuItem key={item.id} item={item} onAddToCart={onAddToCart} />
         ))}
       </ul>

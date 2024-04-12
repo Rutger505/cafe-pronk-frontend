@@ -4,88 +4,66 @@ import MenuCategory from "@/components/MenuCatagory";
 import Basket from "@/components/Basket";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export interface MenuCategoryData {
+export interface CategoryData {
   id: number;
   name: string;
-  items: MenuItemData[];
+  dishes: DishData[];
+  positionIndex: number;
 }
 
-export interface MenuItemData {
+export interface DishData {
   id: number;
   name: string;
   description: string;
   price: number;
+  positionIndex: number;
 }
 
 export interface BasketMenuItemData {
-  item: MenuItemData;
+  item: DishData;
   quantity: number;
 }
 
 export default function Menu() {
   // Get Menu JSON from API
-  const menu: MenuCategoryData[] = [
-    {
-      id: 1,
-      name: "Starters",
-      items: [
-        {
-          id: 1,
-          name: "Nachos",
-          description: "Tortilla chips with cheese, jalapenos, and salsa",
-          price: 6.52,
-        },
-        {
-          id: 2,
-          name: "Garlic Bread",
-          description: "Toasted ciabatta with garlic butter",
-          price: 4,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Mains",
-      items: [
-        {
-          id: 1,
-          name: "Pizza",
-          description: "Tomato and cheese on a thin base",
-          price: 9.99,
-        },
-        {
-          id: 2,
-          name: "Burger",
-          description: "Beef patty with lettuce, tomato, and cheese",
-          price: 12.5,
-        },
-      ],
-    },
-    {
-      id: 3,
-      name: "Desserts",
-      items: [
-        {
-          id: 1,
-          name: "Ice Cream",
-          description: "Vanilla ice cream with chocolate sauce",
-          price: 5.5,
-        },
-        {
-          id: 2,
-          name: "Cheesecake",
-          description: "New York style cheesecake with raspberry coulis",
-          price: 7.5,
-        },
-      ],
-    },
-  ];
-
+  const [menuCategories, setMenuCategories] = useState<CategoryData[]>([]);
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
 
-  function addToCart(item: MenuItemData) {
+  useEffect(() => {
+    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/menu`;
+
+    console.log("Fetching menu from:", apiUri);
+    fetch(apiUri)
+      .then((response) => response.json())
+      .then((data: any) => {
+        console.log("Menu data:", data.categories);
+
+        // Parse API data into CategoryData array
+        const parsedMenuCategories: CategoryData[] = data.categories.map(
+          (category: any) => ({
+            id: category.id,
+            name: category.name,
+            dishes: category.dishes.map((dish: any) => ({
+              id: dish.id,
+              name: dish.name,
+              description: dish.description,
+              price: dish.price,
+              positionIndex: dish.position_index,
+            })),
+            positionIndex: category.position_index,
+          }),
+        );
+
+        setMenuCategories(parsedMenuCategories);
+      })
+      .catch((error) => {
+        console.error("Error fetching menu:", error);
+      });
+  }, []);
+
+  function addToCart(item: DishData) {
     console.log("Added to cart:", JSON.stringify(item));
 
     // Check if item is already in cart
@@ -129,6 +107,11 @@ export default function Menu() {
     changeBasketItemQuantity(item, 1);
   }
 
+  function onCheckout() {
+    setCartItems([]);
+    alert("Checkout complete");
+  }
+
   return (
     <div className={"flex"}>
       <div className={"flex flex-1 flex-col"}>
@@ -137,7 +120,7 @@ export default function Menu() {
           <main className="flex max-w-5xl flex-col px-5 py-12 md:px-24">
             <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
             <ul className={"flex flex-col gap-14"}>
-              {menu.map((category) => (
+              {menuCategories.map((category) => (
                 <MenuCategory
                   key={category.id}
                   category={category}
@@ -154,6 +137,7 @@ export default function Menu() {
         onRemoveFromCart={removeFromCart}
         onDecrementItem={onDecrementItem}
         onIncrementItem={onIncrementItem}
+        onCheckout={onCheckout}
       />
     </div>
   );

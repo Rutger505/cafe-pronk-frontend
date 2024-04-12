@@ -1,14 +1,16 @@
-import { MenuItemData } from "@/app/menu/page";
+import { DishData } from "@/app/menu/page";
 
 interface MenuItemProps {
-  item: MenuItemData;
-  onAddToCart: (id: MenuItemData) => void;
+  item: DishData;
+  onAddToCart: (id: DishData) => void;
 }
 
 export default function MenuItem({
   item,
   onAddToCart,
 }: Readonly<MenuItemProps>) {
+  console.log("MenuItem", item);
+
   return (
     <div
       className={
