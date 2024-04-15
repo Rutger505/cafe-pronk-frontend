@@ -17,7 +17,7 @@ export default function MenuCategory({
       <h2 className={"text-lg font-bold"}>{name}</h2>
       <ul className={"flex flex-col gap-5"}>
         {dishes.map((dish) => (
-          <MenuDish key={id} dish={dish} onAddToCart={onAddToCart} />
+          <MenuDish key={dish.id} dish={dish} onAddToCart={onAddToCart} />
         ))}
       </ul>
     </div>
