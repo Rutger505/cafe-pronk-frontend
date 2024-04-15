@@ -10,12 +10,14 @@ export default function MenuCategory({
   category,
   onAddToCart,
 }: Readonly<MenuCategoryProps>) {
+  const { id, name, dishes } = category;
+
   return (
     <div className={"flex flex-col gap-5"}>
-      <h2 className={"text-lg font-bold"}>{category.name}</h2>
+      <h2 className={"text-lg font-bold"}>{name}</h2>
       <ul className={"flex flex-col gap-5"}>
-        {category.dishes.map((dish) => (
-          <MenuItem key={dish.id} dish={dish} onAddToCart={onAddToCart} />
+        {dishes.map((dish) => (
+          <MenuItem key={id} dish={dish} onAddToCart={onAddToCart} />
         ))}
       </ul>
     </div>

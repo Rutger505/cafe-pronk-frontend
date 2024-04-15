@@ -9,6 +9,8 @@ export default function MenuItem({
   dish,
   onAddToCart,
 }: Readonly<MenuItemProps>) {
+  const { name, description, price } = dish;
+
   return (
     <div
       className={
@@ -16,9 +18,9 @@ export default function MenuItem({
       }
     >
       <div className={"flex flex-col gap-1"}>
-        <h3 className={"text-md font-bold"}>{dish.name}</h3>
-        <p className={"text-sm text-tertiary"}>{dish.description}</p>
-        <p className={"text-md font-bold"}>€{dish.price.toFixed(2)}</p>
+        <h3 className={"text-md font-bold"}>{name}</h3>
+        <p className={"text-sm text-tertiary"}>{description}</p>
+        <p className={"text-md font-bold"}>€{price.toFixed(2)}</p>
       </div>
       <button onClick={() => onAddToCart(dish)}>Add to Cart</button>
     </div>
