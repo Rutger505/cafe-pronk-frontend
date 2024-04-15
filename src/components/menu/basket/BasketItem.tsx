@@ -13,11 +13,13 @@ export default function BasketItem({
   onDecrementItem,
   onIncrementItem,
 }: Readonly<BasketMenuItemProps>) {
+  const { item, quantity } = basketItem;
+
   return (
     <div className={"flex w-full flex-col gap-2 p-3"}>
       <div className={"flex justify-between"}>
-        <h3 className={"font-bold"}>{basketItem.item.name}</h3>
-        <p className={"font-bold"}>{basketItem.item.price.toFixed(2)}</p>
+        <h3 className={"font-bold"}>{item.name}</h3>
+        <p className={"font-bold"}>{item.price.toFixed(2)}</p>
       </div>
       <div className={"flex items-center justify-between"}>
         <div className={"grid h-5 w-20 grid-cols-3 items-center"}>
@@ -26,11 +28,11 @@ export default function BasketItem({
             className={
               "flex items-center justify-center rounded-button bg-secondary"
             }
-            disabled={basketItem.quantity <= 1}
+            disabled={quantity <= 1}
           >
             -
           </button>
-          <p className={"text-center"}>{basketItem.quantity}</p>
+          <p className={"text-center"}>{quantity}</p>
           <button
             onClick={() => onIncrementItem(basketItem)}
             className={

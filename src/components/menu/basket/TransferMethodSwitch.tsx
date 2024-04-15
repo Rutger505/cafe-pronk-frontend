@@ -1,4 +1,4 @@
-import TransferMethod from "@/components/TransferMethod";
+import TransferMethod from "./TransferMethod";
 import { useState } from "react";
 
 enum TransferMethodEnum {

@@ -1,8 +1,8 @@
 "use client";
 
-import MenuCategory from "@/components/MenuCatagory";
-import Basket from "@/components/Basket";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Basket from "@/components/menu/basket";
+import MenuList from "@/components/menu/menuList";
 
 export interface CategoryData {
   id: number;
@@ -23,35 +23,7 @@ export interface BasketMenuItemData {
 }
 
 export default function Menu() {
-  // Get Menu JSON from API
-  const [menuCategories, setMenuCategories] = useState<CategoryData[]>([]);
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
-
-  useEffect(() => {
-    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/menu`;
-
-    console.log("Fetching menu from:", apiUri);
-    fetch(apiUri)
-      .then((response) => response.json())
-      .then((data: any) => {
-        // sort the categories by position_index
-        data.categories = data.categories.sort(
-          (a: any, b: any) => a.position_index - b.position_index,
-        );
-
-        // sort the dishes by position_index
-        data.categories.forEach((category: any) => {
-          category.dishes = category.dishes.sort(
-            (a: any, b: any) => a.position_index - b.position_index,
-          );
-        });
-
-        setMenuCategories(data.categories);
-      })
-      .catch((error) => {
-        console.error("Error fetching menu:", error);
-      });
-  }, []);
 
   function addToCart(item: DishData) {
     console.log("Added to cart:", JSON.stringify(item));
@@ -90,6 +62,7 @@ export default function Menu() {
   function onDecrementItem(item: BasketMenuItemData) {
     console.log("Decremented item:", JSON.stringify(item));
     changeBasketItemQuantity(item, -1);
+    return 1;
   }
 
   function onIncrementItem(item: BasketMenuItemData) {
@@ -105,18 +78,7 @@ export default function Menu() {
   return (
     <main className={"flex"}>
       <div className="flex flex-1 justify-center px-5 py-12 md:px-24">
-        <div className={"flex max-w-5xl flex-1 flex-col justify-between "}>
-          <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
-          <ul className={"flex flex-col gap-14"}>
-            {menuCategories.map((category) => (
-              <MenuCategory
-                key={category.id}
-                category={category}
-                onAddToCart={addToCart}
-              />
-            ))}
-          </ul>
-        </div>
+        <MenuList onAddToCart={addToCart} />
       </div>
       <Basket
         items={cartItems}
