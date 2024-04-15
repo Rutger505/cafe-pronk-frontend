@@ -1,4 +1,4 @@
-import { LoadingMenuCategory } from "@/components/menu/menuList/loading/LoadingMenuCategory";
+import { LoadingCategory } from "@/components/menu/menuList/loading/LoadingCategory";
 
 export interface LoadingMenuItemData {
   title: string;
@@ -10,7 +10,7 @@ function getCharacters(length: number) {
   return "A".repeat(length);
 }
 
-export function LoadingMenuList() {
+export function LoadingList() {
   // Define how long the loading placeholders should be
   const categories = [
     {
@@ -50,7 +50,7 @@ export function LoadingMenuList() {
       <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
       <ul className={"flex flex-col gap-14"}>
         {categories.map((category, index) => (
-          <LoadingMenuCategory
+          <LoadingCategory
             key={index}
             title={getCharacters(category.title)}
             items={category.items.map((item) => ({

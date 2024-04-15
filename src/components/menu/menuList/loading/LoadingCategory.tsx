@@ -1,12 +1,12 @@
-import { LoadingMenuItem } from "@/components/menu/menuList/loading/LoadingMenuItem";
-import { LoadingMenuItemData } from "@/components/menu/menuList/loading/LoadingMenuList";
+import { LoadingDish } from "@/components/menu/menuList/loading/LoadingDish";
+import { LoadingMenuItemData } from "@/components/menu/menuList/loading/LoadingList";
 
 interface LoadingMenuCategoryProps {
   title: string;
   items: LoadingMenuItemData[];
 }
 
-export function LoadingMenuCategory({
+export function LoadingCategory({
   title,
   items,
 }: Readonly<LoadingMenuCategoryProps>) {
@@ -21,7 +21,7 @@ export function LoadingMenuCategory({
       </h2>
       <ul className={"flex flex-col gap-5"}>
         {items.map((item, index) => (
-          <LoadingMenuItem
+          <LoadingDish
             key={index}
             title={item.title}
             description={item.description}

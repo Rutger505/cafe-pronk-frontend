@@ -1,8 +1,8 @@
-import { LoadingMenuItemData } from "@/components/menu/menuList/loading/LoadingMenuList";
+import { LoadingMenuItemData } from "@/components/menu/menuList/loading/LoadingList";
 
 interface LoadingMenuItemProps extends LoadingMenuItemData {}
 
-export function LoadingMenuItem({
+export function LoadingDish({
   title,
   description,
   price,

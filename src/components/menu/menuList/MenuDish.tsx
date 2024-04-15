@@ -5,7 +5,7 @@ interface MenuItemProps {
   onAddToCart: (dish: DishData) => void;
 }
 
-export default function MenuItem({
+export default function MenuDish({
   dish,
   onAddToCart,
 }: Readonly<MenuItemProps>) {

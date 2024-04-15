@@ -4,7 +4,7 @@ import MenuCategory from "./MenuCategory";
 import { CategoryData, DishData } from "@/app/menu/page";
 
 import { useEffect, useState } from "react";
-import { LoadingMenuList } from "@/components/menu/menuList/loading/LoadingMenuList";
+import { LoadingList } from "@/components/menu/menuList/loading/LoadingList";
 
 interface MenuListProps {
   onAddToCart: (dish: DishData) => void;
@@ -38,7 +38,7 @@ export default function MenuList({ onAddToCart }: Readonly<MenuListProps>) {
   }
 
   if (loading) {
-    return <LoadingMenuList />;
+    return <LoadingList />;
   }
 
   return (
