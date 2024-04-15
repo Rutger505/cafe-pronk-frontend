@@ -5,7 +5,7 @@ export default function Footer() {
       <p>Algemene voorwaarden</p>
       <p>Privacy statement</p>
       <p>Cookieverklaring</p>
-      <p>© 2024 Thuisbezorgd.nl</p>
+      <p>© 2024 cafe-pronk</p>
     </footer>
   );
 }
