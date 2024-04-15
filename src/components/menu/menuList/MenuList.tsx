@@ -1,6 +1,6 @@
 "use client";
 
-import MenuCategory from "./MenuCatagory";
+import MenuCategory from "./MenuCategory";
 import { CategoryData, DishData } from "@/app/menu/page";
 
 import { useEffect, useState } from "react";
