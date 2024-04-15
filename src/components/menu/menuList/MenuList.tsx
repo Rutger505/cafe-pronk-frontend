@@ -4,15 +4,15 @@ import MenuCategory from "./MenuCatagory";
 import { CategoryData, DishData } from "@/app/menu/page";
 
 import { useEffect, useState } from "react";
+import { LoadingMenuList } from "@/components/menu/menuList/loading/LoadingMenuList";
 
 interface MenuListProps {
   onAddToCart: (dish: DishData) => void;
 }
 
-export default function MenuList({
-  onAddToCart,
-}: Readonly<MenuListProps>) {
+export default function MenuList({ onAddToCart }: Readonly<MenuListProps>) {
   const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchMenu();
@@ -34,19 +34,28 @@ export default function MenuList({
     });
 
     setCategories(sortedCategories);
+    setLoading(false);
+  }
+
+  if (loading) {
+    return <LoadingMenuList />;
   }
 
   return (
-    <div className={"flex max-w-5xl flex-1 flex-col justify-between "}>
+    <div className={"flex max-w-5xl flex-1 flex-col"}>
       <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
       <ul className={"flex flex-col gap-14"}>
-        {categories.map((category) => (
-          <MenuCategory
-            key={category.id}
-            category={category}
-            onAddToCart={onAddToCart}
-          />
-        ))}
+        {categories.length === 0 ? (
+          <p className={"text-center"}>Er zijn geen gerechten beschikbaar.</p>
+        ) : (
+          categories.map((category) => (
+            <MenuCategory
+              key={category.id}
+              category={category}
+              onAddToCart={onAddToCart}
+            />
+          ))
+        )}
       </ul>
     </div>
   );

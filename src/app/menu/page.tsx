@@ -23,7 +23,6 @@ export interface BasketMenuItemData {
 }
 
 export default function Menu() {
-  // Get Menu JSON from API
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
 
   function addToCart(item: DishData) {
