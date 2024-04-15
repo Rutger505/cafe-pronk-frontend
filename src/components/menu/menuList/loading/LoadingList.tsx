@@ -45,22 +45,15 @@ export function LoadingList() {
     },
   ];
 
-  return (
-    <div className={"flex max-w-5xl flex-1 flex-col"}>
-      <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
-      <ul className={"flex flex-col gap-14"}>
-        {categories.map((category, index) => (
-          <LoadingCategory
-            key={index}
-            title={getCharacters(category.title)}
-            items={category.items.map((item) => ({
-              title: getCharacters(item.title),
-              description: getCharacters(item.description),
-              price: getCharacters(item.price),
-            }))}
-          />
-        ))}
-      </ul>
-    </div>
-  );
+  return categories.map((category, index) => (
+    <LoadingCategory
+      key={index}
+      title={getCharacters(category.title)}
+      items={category.items.map((item) => ({
+        title: getCharacters(item.title),
+        description: getCharacters(item.description),
+        price: getCharacters(item.price),
+      }))}
+    />
+  ));
 }
