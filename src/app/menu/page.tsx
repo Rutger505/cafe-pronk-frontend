@@ -33,20 +33,22 @@ export default function Menu() {
     console.log("Fetching menu from:", apiUri);
     fetch(apiUri)
       .then((response) => response.json())
-      .then((data: any) => {
+      .then((data: any[]) => {
+        console.log("Fetched menu:", data)
+
         // sort the categories by position_index
-        data.categories = data.categories.sort(
+        data = data.sort(
           (a: any, b: any) => a.position_index - b.position_index,
         );
 
         // sort the dishes by position_index
-        data.categories.forEach((category: any) => {
+        data.forEach((category: any) => {
           category.dishes = category.dishes.sort(
             (a: any, b: any) => a.position_index - b.position_index,
           );
         });
 
-        setMenuCategories(data.categories);
+        setMenuCategories(data);
       })
       .catch((error) => {
         console.error("Error fetching menu:", error);

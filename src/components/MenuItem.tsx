@@ -9,8 +9,6 @@ export default function MenuItem({
   item,
   onAddToCart,
 }: Readonly<MenuItemProps>) {
-  console.log("MenuItem", item);
-
   return (
     <div
       className={
