@@ -1,7 +1,7 @@
 import { BasketMenuItemData } from "@/app/menu/page";
-import TransferMethodSwitch from "@/components/TransferMethodSwitch";
-import BasketItem from "@/components/BasketItem";
-import BasketCheckoutButton from "@/components/BasketCheckoutButton";
+import TransferMethodSwitch from "./TransferMethodSwitch";
+import BasketItem from "./BasketItem";
+import BasketCheckoutButton from "./BasketCheckoutButton";
 
 interface BasketProps {
   items: BasketMenuItemData[];

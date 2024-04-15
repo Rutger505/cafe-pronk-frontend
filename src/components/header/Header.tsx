@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import HeaderLink from "@/components/HeaderLink";
+import HeaderLink from "./HeaderLink";
 
 export default function Header() {
   return (
     <header
       className={
-        "shadow-bottom flex h-16 items-center justify-between bg-primary px-10"
+        "flex h-16 items-center justify-between bg-primary px-10 shadow-bottom"
       }
     >
       <Link href={"/"}>

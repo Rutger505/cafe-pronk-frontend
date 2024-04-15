@@ -1,12 +1,12 @@
 import { DishData } from "@/app/menu/page";
 
 interface MenuItemProps {
-  item: DishData;
-  onAddToCart: (id: DishData) => void;
+  dish: DishData;
+  onAddToCart: (dish: DishData) => void;
 }
 
 export default function MenuItem({
-  item,
+  dish,
   onAddToCart,
 }: Readonly<MenuItemProps>) {
   return (
@@ -16,11 +16,11 @@ export default function MenuItem({
       }
     >
       <div className={"flex flex-col gap-1"}>
-        <h3 className={"text-md font-bold"}>{item.name}</h3>
-        <p className={"text-sm text-tertiary"}>{item.description}</p>
-        <p className={"text-md font-bold"}>€{item.price.toFixed(2)}</p>
+        <h3 className={"text-md font-bold"}>{dish.name}</h3>
+        <p className={"text-sm text-tertiary"}>{dish.description}</p>
+        <p className={"text-md font-bold"}>€{dish.price.toFixed(2)}</p>
       </div>
-      <button onClick={() => onAddToCart(item)}>Add to Cart</button>
+      <button onClick={() => onAddToCart(dish)}>Add to Cart</button>
     </div>
   );
 }
