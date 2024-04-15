@@ -1,10 +1,10 @@
-# thuisbezorgd-frontend
+# cafe-pronk-frontend
 
-School project, making Takeaway's (Thuisbezorgd in Dutch). Frontend in Next.js, [backend api](https://github.com/Rutger505/thuisbezorgd-backend/) in Laravel.
+School project, making a cafe. Frontend in Next.js, [backend api](https://github.com/Rutger505/cafe-pronk-backend/) in Laravel.
 
 ## Installation
 
-Ensure that the [backend api](https://github.com/Rutger505/thuisbezorgd-backend/) is running.
+Ensure that the [backend api](https://github.com/Rutger505/cafe-pronk-backend/) is running.
 
 1. Clone the repository
 2. Copy `.env.example` to `.env`
