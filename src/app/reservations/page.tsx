@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Input from "@/components/Input";
+import TextArea from "@/components/TextArea";
+import Button from "@/components/Button";
 
 export default function Reservations() {
   const [formMessage, setFormMessage] = useState<string>("");
@@ -36,72 +39,35 @@ export default function Reservations() {
       <h1 className={"mb-6 text-center text-xl"}>Reservering plaatsen</h1>
 
       <form className={"flex max-w-md flex-col"} onSubmit={onFormSubmit}>
-        <label htmlFor="name">Naam*</label>
-        <input
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-          }
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Naam"
-          required
-        />
+        <Input label={"Naam*"} id={"name"} required />
 
-        <label htmlFor="amount">Aantal personen*</label>
-        <input
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-          }
-          type="number"
-          id="amount"
-          name="amount"
-          placeholder="Aantal personen"
+        <Input
+          label={"Aantal personen*"}
+          id={"amount"}
+          type={"number"}
           required
         />
 
         <div className={"grid grid-cols-2 gap-x-4"}>
-          <label htmlFor="date">Datum*</label>
-          <label htmlFor="time">Tijd*</label>
-
-          <input
-            className={
-              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-            }
-            type="date"
-            id="date"
-            name="date"
-            required
-          />
-          <input
-            className={
-              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-            }
-            type="time"
-            id="time"
-            name="time"
-            min="12:00"
-            max="21:00"
-            required
-          />
+          <div className={"flex flex-col"}>
+            <Input label={"Datum*"} id={"date"} type={"date"} required />
+          </div>
+          <div className={"flex flex-col"}>
+            <Input
+              label={"Tijd*"}
+              id={"time"}
+              type={"time"}
+              min={"16:00"}
+              max={"21:00"}
+              required
+            />
+          </div>
         </div>
 
-        <label htmlFor="comment">Opmerking</label>
-        <textarea
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-3 py-1"
-          }
-          id="comment"
-          name="comment"
-          placeholder="Opmerking"
-        />
+        <TextArea label={"Opmerking"} id={"comment"} />
 
-        <button
-          className={"rounded-button bg-accent px-6 py-2 text-primary"}
-          type="submit"
-        >
-          Reserveren
-        </button>
+        <Button>Reserveren</Button>
+
         <p>{formMessage}</p>
       </form>
     </main>
