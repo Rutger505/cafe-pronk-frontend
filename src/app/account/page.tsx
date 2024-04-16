@@ -3,8 +3,8 @@ import Button from "@/components/Button";
 
 export default function AccountOverview() {
   return (
-    <main className={"flex flex-col items-center"}>
-      <h1 className={"mb-10 text-xl "}>Accountoverzicht</h1>
+    <main>
+      <h1 className={"mb-10 text-center text-xl"}>Accountoverzicht</h1>
       <div className={"flex w-full flex-col items-start"}>
         <h2 className={"mb-5 text-lg"}>Welkom &lt;user name&gt;</h2>
         <form className={"mt-8 grid grid-cols-2 grid-rows-2 gap-x-4"}>
