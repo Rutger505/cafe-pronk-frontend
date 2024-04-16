@@ -1,8 +1,5 @@
-import { Inter } from "next/font/google";
 import "@/app/globals.css";
 import SideNavigation from "@/components/account/sideNavigation";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function AccountLayout({
   children,
