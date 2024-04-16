@@ -9,14 +9,19 @@ export default function AccountOverview() {
         <h2 className={"mb-5 text-lg"}>Welkom &lt;user name&gt;</h2>
         <form className={"mt-8 grid grid-cols-2 grid-rows-2 gap-x-4"}>
           <div>
-            <Input label={"Naam*"} id={"name"} value={"<user name>"} required />
+            <Input
+              label={"Naam*"}
+              id={"name"}
+              defaultValue={"<user name>"}
+              required
+            />
           </div>
           <div>
             <Input
               label={"E-mailadres*"}
               id={"email"}
               type={"email"}
-              value={"<user email>"}
+              defaultValue={"<user email>"}
               required
             />
           </div>
