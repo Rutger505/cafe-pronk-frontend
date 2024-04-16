@@ -82,7 +82,7 @@ export default function Menu() {
     <main className={"flex"}>
       <div
         ref={listRef}
-        className="flex flex-1 justify-center px-5 py-12 md:px-24"
+        className="flex flex-1 justify-center px-5 py-14 md:px-24"
       >
         <div className={"flex max-w-5xl flex-1 flex-col"}>
           <h1 className={"mb-12 text-center text-xl"}>Menu</h1>
