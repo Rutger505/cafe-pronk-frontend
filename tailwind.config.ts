@@ -11,9 +11,7 @@ const config: Config = {
       primary: "#FFFFFF",
       secondary: "#EBE9E8",
       tertiary: "#242E30",
-      accent: "#F36805",
-      "accent-secondary": "#FF8000",
-      "homepage-gray": " #F5F3F1",
+      accent: "#01001C",
     },
     fontSize: {
       xs: "14px",
@@ -28,6 +26,7 @@ const config: Config = {
       left: "-4px 0px 6px 0px rgba(0, 0, 0, .04)",
     },
     borderRadius: {
+      small: "4px",
       normal: "12px",
       button: "9999px",
     },
