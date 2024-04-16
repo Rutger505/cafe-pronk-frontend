@@ -1,8 +1,14 @@
 import { Graduate } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 
 const graduate = Graduate({ subsets: ["latin"], weight: ["400"] });
+
+export const metadata: Metadata = {
+  title: "Cafe Pronk",
+  description: "Bestel online bij Cafe Pronk",
+};
 
 export default function Home() {
   return (
@@ -30,7 +36,7 @@ export default function Home() {
       <h2 className="z-10 mb-4 text-[60px] text-primary">Order Online</h2>
       <Link
         href={"/menu"}
-        className="rounded-small z-10 bg-accent px-5 py-2 text-[18px] text-primary"
+        className="z-10 rounded-small bg-accent px-5 py-2 text-[18px] text-primary"
       >
         View Menu
       </Link>
