@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Input from "@/components/Input";
+import TextArea from "@/components/TextArea";
+import Button from "@/components/Button";
 
 export default function Contact() {
   const [formMessage, setFormMessage] = useState<string>("");
@@ -38,71 +41,38 @@ export default function Contact() {
 
       <form className={"flex max-w-md flex-col"} onSubmit={onFormSubmit}>
         <div className={"grid grid-cols-2 gap-x-4"}>
-          <label htmlFor="name">Naam*</label>
-          <label htmlFor="business">Bedrijf</label>
-
-          <input
-            className={
-              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-            }
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Naam"
-            required
-          />
-          <input
-            className={
-              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-            }
-            type="text"
-            id="business"
-            name="business"
-            placeholder="Bedrijf"
-          />
+          <div className={"flex flex-col"}>
+            <Input label={"Naam*"} id={"name"} placeholder={"Naam"} required />
+          </div>
+          <div className={"flex flex-col"}>
+            <Input label={"Bedrijf"} id={"business"} placeholder={"Bedrijf"} />
+          </div>
         </div>
 
-        <label htmlFor={"email"}>Email*</label>
-        <input
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-          }
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
+        <Input
+          label={"Email*"}
+          type={"email"}
+          id={"email"}
+          placeholder={"Email"}
           required
         />
 
-        <label htmlFor={"subject"}>Onderwerp*</label>
-        <input
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-          }
-          type="text"
-          id="subject"
-          name="subject"
-          placeholder="Onderwerp"
+        <Input
+          label={"Onderwerp*"}
+          type={"text"}
+          id={"subject"}
+          placeholder={"Onderwerp"}
           required
         />
 
-        <label htmlFor="message">Bericht*</label>
-        <textarea
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-3 py-2"
-          }
-          id="message"
-          name="message"
-          placeholder="Bericht"
+        <TextArea
+          label={"Bericht*"}
+          id={"message"}
+          placeholder={"Bericht"}
           required
         />
 
-        <button
-          className={"rounded-button bg-accent px-4 py-2 text-primary"}
-          type="submit"
-        >
-          Reserveren
-        </button>
+        <Button>Reserveren</Button>
         <p>{formMessage}</p>
       </form>
     </main>

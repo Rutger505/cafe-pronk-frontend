@@ -1,7 +1,7 @@
 import { BasketMenuItemData } from "@/app/menu/page";
 import TransferMethodSwitch from "./TransferMethodSwitch";
 import BasketItem from "./BasketItem";
-import BasketCheckoutButton from "./BasketCheckoutButton";
+import Button from "@/components/Button";
 
 interface BasketProps {
   height: number | undefined;
@@ -44,13 +44,13 @@ export default function Basket({
               />
             ))}
           </ul>
-          <BasketCheckoutButton
-            price={items.reduce(
-              (acc, item) => acc + item.item.price * item.quantity,
-              0,
-            )}
-            onCheckout={onCheckout}
-          />
+          <Button onClick={onCheckout} className={"w-full font-bold"}>
+            Checkout (€
+            {items
+              .reduce((acc, item) => acc + item.item.price * item.quantity, 0)
+              .toFixed(2)}
+            )
+          </Button>
         </>
       ) : (
         <div className={"flex h-full flex-col items-center justify-center"}>
