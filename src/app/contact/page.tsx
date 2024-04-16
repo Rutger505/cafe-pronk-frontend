@@ -34,36 +34,38 @@ export default function Reserveren() {
 
   return (
     <main className="flex flex-col items-center px-24 py-10">
-      <h1 className={"text-center text-xl"}>Neem contact op</h1>
+      <h1 className={"my-5 text-center text-xl"}>Neem contact op</h1>
 
-      <form className={"mt-5 flex flex-col"} onSubmit={onFormSubmit}>
-        <label htmlFor="name">Naam</label>
+      <form className={"mt-6 flex max-w-md flex-col"} onSubmit={onFormSubmit}>
+        <div className={"grid grid-cols-2 gap-x-4"}>
+          <label htmlFor="name">Naam*</label>
+          <label htmlFor="business">Bedrijf</label>
+
+          <input
+            className={
+              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
+            }
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Naam"
+            required
+          />
+          <input
+            className={
+              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
+            }
+            type="text"
+            id="business"
+            name="business"
+            placeholder="Bedrijf"
+          />
+        </div>
+
+        <label htmlFor={"email"}>Email*</label>
         <input
           className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
-          }
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Naam"
-          required
-        />
-
-        <label htmlFor="business">Bedrijf</label>
-        <input
-          className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
-          }
-          type="text"
-          id="business"
-          name="business"
-          placeholder="Bedrijf"
-        />
-
-        <label htmlFor={"email"}>Email</label>
-        <input
-          className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
+            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
           }
           type="email"
           id="email"
@@ -72,10 +74,10 @@ export default function Reserveren() {
           required
         />
 
-        <label htmlFor={"subject"}>Onderwerp</label>
+        <label htmlFor={"subject"}>Onderwerp*</label>
         <input
           className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
+            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
           }
           type="text"
           id="subject"
@@ -84,10 +86,10 @@ export default function Reserveren() {
           required
         />
 
-        <label htmlFor="comment">Opmerking</label>
+        <label htmlFor="comment">Bericht*</label>
         <textarea
           className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-3 py-1"
+            "mb-5 rounded-normal border-[1px] border-tertiary px-3 py-2"
           }
           id="comment"
           name="comment"
@@ -96,7 +98,7 @@ export default function Reserveren() {
         />
 
         <button
-          className={"rounded-button bg-accent px-6 py-2 text-primary"}
+          className={"rounded-button bg-accent px-4 py-2 text-primary"}
           type="submit"
         >
           Reserveren
