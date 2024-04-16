@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Basket from "@/components/menu/basket";
 import MenuList from "@/components/menu/menuList";
+import useHeightOnScreen from "@/hooks/useHeightOnScreen";
 
 export interface CategoryData {
   id: number;
@@ -24,6 +25,8 @@ export interface BasketMenuItemData {
 
 export default function Menu() {
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
+  const listRef = useRef<HTMLDivElement>(null);
+  const visibleListHeight = useHeightOnScreen(listRef);
 
   function addToCart(item: DishData) {
     console.log("Added to cart:", JSON.stringify(item));
@@ -77,7 +80,10 @@ export default function Menu() {
 
   return (
     <main className={"flex"}>
-      <div className="flex flex-1 justify-center px-5 py-12 md:px-24">
+      <div
+        ref={listRef}
+        className="flex flex-1 justify-center px-5 py-12 md:px-24"
+      >
         <div className={"flex max-w-5xl flex-1 flex-col"}>
           <h1 className={"mb-12 text-center text-xl"}>Menu</h1>
           <MenuList onAddToCart={addToCart} />
@@ -89,6 +95,7 @@ export default function Menu() {
         onDecrementItem={onDecrementItem}
         onIncrementItem={onIncrementItem}
         onCheckout={onCheckout}
+        height={visibleListHeight}
       />
     </main>
   );
