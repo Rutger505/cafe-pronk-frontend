@@ -19,7 +19,7 @@ export default function HeaderLink({
 
   return (
     <Link
-      className={`${className} ${href === path && "bg-secondary"} rounded-button !bg-opacity-60 px-4 py-1 text-sm hover:bg-secondary`}
+      className={`${className} ${href === path && "bg-secondary"} rounded-button !bg-opacity-60 px-4 py-1 text-sm transition-all duration-75 hover:bg-secondary`}
       href={href}
       {...rest}
     >
