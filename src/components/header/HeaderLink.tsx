@@ -9,17 +9,22 @@ interface HeaderLinkProps
   href: string;
 }
 
-export default function HeaderLink(props: Readonly<HeaderLinkProps>) {
-  const { className, href, ...rest } = props;
+export default function HeaderLink({
+  className,
+  href,
+  children,
+  ...rest
+}: Readonly<HeaderLinkProps>) {
   const path = usePathname();
 
   return (
     <Link
-      className={`${className} ${href === path && "bg-secondary"} rounded-button px-3 py-1 text-sm hover:bg-secondary`}
+      className={`${className} ${href === path && "bg-[#222]"}
+       rounded-button  px-5 py-2 text-sm text-primary transition-all duration-75 hover:bg-[#222]`}
       href={href}
       {...rest}
     >
-      {props.children}
+      {children}
     </Link>
   );
 }

@@ -1,21 +1,20 @@
 import Link from "next/link";
-import Image from "next/image";
 import HeaderLink from "./HeaderLink";
+import { Graduate } from "@next/font/google";
+
+const graduate = Graduate({ subsets: ["latin"], weight: ["400"] });
 
 export default function Header() {
   return (
     <header
       className={
-        "flex h-16 items-center justify-between bg-primary px-10 shadow-bottom"
+        "flex h-16 items-center justify-between bg-[#000] px-10 shadow-bottom"
       }
     >
       <Link href={"/"}>
-        <Image
-          height={32}
-          width={166}
-          src={"/thuisbezorgd.webp"}
-          alt={"Thuisbezorgd logo"}
-        />
+        <p className={graduate.className + " text-[22px] text-primary"}>
+          Cafe Pronk
+        </p>
       </Link>
 
       <div className={"flex items-center gap-x-5"}>
