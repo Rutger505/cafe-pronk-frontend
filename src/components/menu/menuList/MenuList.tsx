@@ -14,7 +14,7 @@ function filterCategories(categories: CategoryData[], searchQuery: string) {
         const filteredDishes = category.dishes.filter((dish) => {
           const dishName = dish.name.toLowerCase();
           const dishDescription = dish.description.toLowerCase();
-          const search = searchQuery.toLowerCase();
+          const search = searchQuery.trim().toLowerCase();
 
           return dishName.includes(search) || dishDescription.includes(search);
         });
