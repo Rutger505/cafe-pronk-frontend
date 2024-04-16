@@ -32,14 +32,14 @@ export default function Reserveren() {
   }
 
   return (
-    <main className="flex flex-col items-center px-24 py-10">
-      <h1 className={"text-center text-xl"}>Reservering plaatsen</h1>
+    <main className="flex flex-col items-center px-24 py-14">
+      <h1 className={"mb-6 text-center text-xl"}>Reservering plaatsen</h1>
 
-      <form className={"mt-5 flex flex-col"} onSubmit={onFormSubmit}>
-        <label htmlFor="name">Naam</label>
+      <form className={"flex max-w-md flex-col"} onSubmit={onFormSubmit}>
+        <label htmlFor="name">Naam*</label>
         <input
           className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
+            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
           }
           type="text"
           id="name"
@@ -48,10 +48,10 @@ export default function Reserveren() {
           required
         />
 
-        <label htmlFor="amount">Aantal personen</label>
+        <label htmlFor="amount">Aantal personen*</label>
         <input
           className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
+            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
           }
           type="number"
           id="amount"
@@ -60,29 +60,31 @@ export default function Reserveren() {
           required
         />
 
-        <label htmlFor="date">Datum</label>
-        <input
-          className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
-          }
-          type="date"
-          id="date"
-          name="date"
-          required
-        />
+        <div className={"grid grid-cols-2 gap-x-4"}>
+          <label htmlFor="date">Datum*</label>
+          <label htmlFor="time">Tijd*</label>
 
-        <label htmlFor="time">Tijd</label>
-        <input
-          className={
-            "mb-5 rounded-button border-[1px] border-tertiary px-6 py-1"
-          }
-          type="time"
-          id="time"
-          name="time"
-          min="12:00"
-          max="21:00"
-          required
-        />
+          <input
+            className={
+              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
+            }
+            type="date"
+            id="date"
+            name="date"
+            required
+          />
+          <input
+            className={
+              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
+            }
+            type="time"
+            id="time"
+            name="time"
+            min="12:00"
+            max="21:00"
+            required
+          />
+        </div>
 
         <label htmlFor="comment">Opmerking</label>
         <textarea

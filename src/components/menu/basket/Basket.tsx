@@ -4,6 +4,7 @@ import BasketItem from "./BasketItem";
 import BasketCheckoutButton from "./BasketCheckoutButton";
 
 interface BasketProps {
+  height: number | undefined;
   items: BasketMenuItemData[];
   onRemoveFromCart: (item: BasketMenuItemData) => void;
   onDecrementItem: (item: BasketMenuItemData) => void;
@@ -12,6 +13,7 @@ interface BasketProps {
 }
 
 export default function Basket({
+  height,
   items,
   onRemoveFromCart,
   onDecrementItem,
@@ -21,8 +23,9 @@ export default function Basket({
   return (
     <div
       className={
-        "shadow-left sticky top-0 flex h-screen w-80 flex-col items-center gap-5 p-5"
+        "sticky top-0 flex h-screen w-80 flex-col items-center gap-5 p-5 shadow-left"
       }
+      style={{ height }}
     >
       <h2 className={"my-5 text-center text-lg font-bold"}>Basket</h2>
 

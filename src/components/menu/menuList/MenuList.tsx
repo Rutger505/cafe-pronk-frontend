@@ -62,7 +62,7 @@ export default function MenuList({ onAddToCart }: Readonly<MenuListProps>) {
 
   let menuListContent: ReactNode;
   if (loading) {
-    menuListContent = <LoadingList key="loading" />;
+    menuListContent = <LoadingList />;
   } else if (filteredCategories.length === 0) {
     menuListContent = (
       <p className={"font-bold"}>Er zijn geen gerechten beschikbaar.</p>
@@ -78,12 +78,10 @@ export default function MenuList({ onAddToCart }: Readonly<MenuListProps>) {
   }
 
   return (
-    <div className={"flex max-w-5xl flex-1 flex-col"}>
-      <h1 className={"mb-5 text-center text-xl"}>Menu</h1>
-
+    <>
       <SearchBar onSearchChange={(search) => setSearchQuery(search)} />
 
       <ul className={"flex flex-col gap-14"}>{menuListContent}</ul>
-    </div>
+    </>
   );
 }
