@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Reserveren() {
+export default function Reservations() {
   const [formMessage, setFormMessage] = useState<string>("");
 
   function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {

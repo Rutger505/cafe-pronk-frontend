@@ -19,7 +19,7 @@ export default function Header() {
 
       <div className={"flex items-center gap-x-5"}>
         <HeaderLink href={"/menu"}>Menu</HeaderLink>
-        <HeaderLink href={"/reserveren"}>Reserveren</HeaderLink>
+        <HeaderLink href={"/reservations"}>Reserveren</HeaderLink>
         <HeaderLink href={"/contact"}>Contact</HeaderLink>
         <HeaderLink href={"/account"}>Account</HeaderLink>
         <HeaderLink href={"/admin"}>Admin</HeaderLink>
