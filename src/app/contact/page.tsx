@@ -13,9 +13,9 @@ export default function Reserveren() {
     const business = formData.get("business") as string;
     const email = formData.get("email") as string;
     const subject = formData.get("subject") as string;
-    const comment = formData.get("comment") as string;
+    const message = formData.get("message") as string;
 
-    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/contact/${name}/${business}/${email}/${subject}/${comment}`;
+    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/contact/${name}/${business}/${email}/${subject}/${message}`;
 
     console.log("Posting contact message to:", apiUri);
     fetch(apiUri, { method: "POST" })
@@ -33,10 +33,10 @@ export default function Reserveren() {
   }
 
   return (
-    <main className="flex flex-col items-center px-24 py-10">
-      <h1 className={"my-5 text-center text-xl"}>Neem contact op</h1>
+    <main className="flex flex-col items-center px-24 py-14">
+      <h1 className={"mb-6 text-center text-xl"}>Neem contact op</h1>
 
-      <form className={"mt-6 flex max-w-md flex-col"} onSubmit={onFormSubmit}>
+      <form className={"flex max-w-md flex-col"} onSubmit={onFormSubmit}>
         <div className={"grid grid-cols-2 gap-x-4"}>
           <label htmlFor="name">Naam*</label>
           <label htmlFor="business">Bedrijf</label>
@@ -86,14 +86,14 @@ export default function Reserveren() {
           required
         />
 
-        <label htmlFor="comment">Bericht*</label>
+        <label htmlFor="message">Bericht*</label>
         <textarea
           className={
             "mb-5 rounded-normal border-[1px] border-tertiary px-3 py-2"
           }
-          id="comment"
-          name="comment"
-          placeholder="Opmerking"
+          id="message"
+          name="message"
+          placeholder="Bericht"
           required
         />
 
