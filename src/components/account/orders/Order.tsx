@@ -43,15 +43,15 @@ export default function Order({ order }: Readonly<OrderProps>) {
       <h3 className="mb-2 text-md font-bold">Gerechten:</h3>
       <div>
         {order.dishes.map((dish) => (
-          <>
-            <div key={dish.id} className="flex justify-between">
-              <p className="text-sm">{dish.dish.name}</p>
-              <p className="text-sm">
-                €{dish.dish.price.toFixed(2)} x {dish.quantity}
-              </p>
-            </div>
-            <hr className={"text-secondary"} />
-          </>
+          <div
+            key={dish.id}
+            className="flex justify-between border-b border-secondary"
+          >
+            <p className="text-sm">{dish.dish.name}</p>
+            <p className="text-sm">
+              €{dish.dish.price.toFixed(2)} x {dish.quantity}
+            </p>
+          </div>
         ))}
       </div>
     </div>

@@ -93,7 +93,7 @@ export default function OrdersList() {
       updated_at: "2024-04-15T20:52:12.000000Z",
       dishes: [
         {
-          id: 1,
+          id: 5,
           order_id: 1,
           dish_id: 1,
           quantity: 2,
@@ -108,7 +108,7 @@ export default function OrdersList() {
           },
         },
         {
-          id: 2,
+          id: 6,
           order_id: 1,
           dish_id: 2,
           quantity: 1,
@@ -123,7 +123,7 @@ export default function OrdersList() {
           },
         },
         {
-          id: 3,
+          id: 7,
           order_id: 1,
           dish_id: 3,
           quantity: 3,
@@ -138,7 +138,7 @@ export default function OrdersList() {
           },
         },
         {
-          id: 3,
+          id: 8,
           order_id: 1,
           dish_id: 3,
           quantity: 3,
