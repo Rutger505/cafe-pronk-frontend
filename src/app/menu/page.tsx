@@ -78,7 +78,10 @@ export default function Menu() {
   return (
     <main className={"flex"}>
       <div className="flex flex-1 justify-center px-5 py-12 md:px-24">
-        <MenuList onAddToCart={addToCart} />
+        <div className={"flex max-w-5xl flex-1 flex-col"}>
+          <h1 className={"mb-12 text-center text-xl"}>Menu</h1>
+          <MenuList onAddToCart={addToCart} />
+        </div>
       </div>
       <Basket
         items={cartItems}
