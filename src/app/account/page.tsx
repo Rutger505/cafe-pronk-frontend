@@ -10,42 +10,38 @@ export default function AccountOverview() {
         <div className={"flex flex-col items-center"}>
           <h1 className={"mb-10 text-xl "}>Accountoverzicht</h1>
           <div className={"flex w-full flex-col items-start"}>
-            <h2 className={"text-lg"}>Hallo Rutger!</h2>
-            <p className={"text-md"}>rutger@email.com</p>
-
-            <form className={"my-10"}>
-              <h3 className={"mb-4 text-md font-bold"}>Wijzig E-mailadres</h3>
-              <Input
-                label={"Nieuw E-mailadres"}
-                id={"new-email"}
-                type={"email"}
-              />
-
-              <Input
-                label={"Huidig Wachtwoord"}
-                id={"current-password"}
-                type={"password"}
-              />
-              <Button>Wijzig E-mailadres</Button>
-            </form>
-            <form>
-              <h3 className={"mb-4 text-md font-bold"}>Wijzig Wachtwoord</h3>
-              <Input
-                label={"Huidig Wachtwoord"}
-                id={"current-password"}
-                type={"password"}
-              />
-              <Input
-                label={"Nieuw Wachtwoord"}
-                id={"new-password"}
-                type={"password"}
-              />
-              <Input
-                label={"Herhaal Nieuw Wachtwoord"}
-                id={"confirm-password"}
-                type={"password"}
-              />
-              <Button>Wijzig Wachtwoord</Button>
+            <h2 className={"mb-5 text-lg"}>Welkom Rutger</h2>
+            <form className={"mt-8 grid grid-cols-2 grid-rows-2 gap-x-4"}>
+              <div>
+                <Input label={"Naam*"} id={"name"} value={"Rutger"} required />
+              </div>
+              <div>
+                <Input
+                  label={"E-mailadres*"}
+                  id={"email"}
+                  type={"email"}
+                  value={"rutger@email.com"}
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  label={"Nieuw Wachtwoord"}
+                  id={"new-password"}
+                  type={"password"}
+                />
+              </div>
+              <div>
+                <Input
+                  label={"Huidig Wachtwoord*"}
+                  id={"current-password"}
+                  type={"password"}
+                  required
+                />
+              </div>
+              <Button className={"col-end-3 my-auto ml-auto h-fit w-32"}>
+                Opslaan
+              </Button>
             </form>
           </div>
         </div>
