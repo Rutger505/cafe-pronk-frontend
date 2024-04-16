@@ -1,20 +1,14 @@
-import { HTMLInputTypeAttribute, TextareaHTMLAttributes } from "react";
+import { TextareaHTMLAttributes } from "react";
 
 interface InputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label: string;
   id: string;
-  placeholder: string;
-  required?: boolean;
-  type?: HTMLInputTypeAttribute;
-  className?: string;
+  label: string;
 }
 
 export default function TextArea({
-  label,
   id,
-  placeholder,
-  required = false,
-  className,
+  label,
+  className = "",
   ...rest
 }: Readonly<InputProps>) {
   return (
@@ -24,8 +18,7 @@ export default function TextArea({
         className={`${className} mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2`}
         id={id}
         name={id}
-        placeholder={placeholder}
-        required={required}
+        placeholder={label.replace("*", "")}
         {...rest}
       />
     </>

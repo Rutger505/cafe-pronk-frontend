@@ -42,35 +42,18 @@ export default function Contact() {
       <form className={"flex max-w-md flex-col"} onSubmit={onFormSubmit}>
         <div className={"grid grid-cols-2 gap-x-4"}>
           <div className={"flex flex-col"}>
-            <Input label={"Naam*"} id={"name"} placeholder={"Naam"} required />
+            <Input label={"Naam*"} id={"name"} required />
           </div>
           <div className={"flex flex-col"}>
-            <Input label={"Bedrijf"} id={"business"} placeholder={"Bedrijf"} />
+            <Input label={"Bedrijf"} id={"business"} />
           </div>
         </div>
 
-        <Input
-          label={"Email*"}
-          type={"email"}
-          id={"email"}
-          placeholder={"Email"}
-          required
-        />
+        <Input label={"Email*"} type={"email"} id={"email"} required />
 
-        <Input
-          label={"Onderwerp*"}
-          type={"text"}
-          id={"subject"}
-          placeholder={"Onderwerp"}
-          required
-        />
+        <Input label={"Onderwerp*"} id={"subject"} required />
 
-        <TextArea
-          label={"Bericht*"}
-          id={"message"}
-          placeholder={"Bericht"}
-          required
-        />
+        <TextArea label={"Bericht*"} id={"message"} required />
 
         <Button>Reserveren</Button>
         <p>{formMessage}</p>
