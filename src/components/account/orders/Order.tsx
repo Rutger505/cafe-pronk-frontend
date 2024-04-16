@@ -1,4 +1,4 @@
-import { OrderData } from "@/components/account/orders/OrdersList";
+import { OrderData } from "@/app/account/orders/page";
 
 interface OrderProps {
   order: OrderData;

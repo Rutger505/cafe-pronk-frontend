@@ -1,10 +1,12 @@
-import { ReservationData } from "@/components/account/reservations/ReservationsList";
+import { ReservationData } from "@/app/account/reservations/page";
 
 interface ReservationProps {
   reservation: ReservationData;
 }
 
-export function Reservation({ reservation }: Readonly<ReservationProps>) {
+export default function Reservation({
+  reservation,
+}: Readonly<ReservationProps>) {
   const reservationDateObject = new Date(reservation.date);
   const reservationDate = reservationDateObject.toLocaleDateString("nl-NL", {
     day: "2-digit",
