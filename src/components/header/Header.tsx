@@ -12,9 +12,7 @@ export default function Header() {
       }
     >
       <Link href={"/"}>
-        <p className={graduate.className + " cursor-pointer text-[22px]"}>
-          Cafe Pronk
-        </p>
+        <p className={graduate.className + " text-[22px]"}>Cafe Pronk</p>
       </Link>
 
       <div className={"flex items-center gap-x-5"}>
