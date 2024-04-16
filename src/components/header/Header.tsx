@@ -1,6 +1,6 @@
 import Link from "next/link";
 import HeaderLink from "./HeaderLink";
-import { Graduate } from "@next/font/google";
+import { Graduate } from "next/font/google";
 
 const graduate = Graduate({ subsets: ["latin"], weight: ["400"] });
 
