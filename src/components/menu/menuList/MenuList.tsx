@@ -62,7 +62,7 @@ export default function MenuList({ onAddToCart }: Readonly<MenuListProps>) {
 
   let menuListContent: ReactNode;
   if (loading) {
-    menuListContent = <LoadingList key="loading" />;
+    menuListContent = <LoadingList />;
   } else if (filteredCategories.length === 0) {
     menuListContent = (
       <p className={"font-bold"}>Er zijn geen gerechten beschikbaar.</p>
