@@ -5,7 +5,7 @@ export default function Footer() {
       <p>Algemene voorwaarden</p>
       <p>Privacy statement</p>
       <p>Cookieverklaring</p>
-      <p>© 2024 cafe-pronk</p>
+      <p>©2024 Cafe Pronk</p>
     </footer>
   );
 }
