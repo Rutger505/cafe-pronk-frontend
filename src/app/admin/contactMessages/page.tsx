@@ -35,6 +35,20 @@ export default function ManageContactMessages() {
   return (
     <main>
       <h1 className={"mb-10 text-center text-xl"}>Contact berichten</h1>
+      <h2 className={"mb-5 text-lg font-bold"}>Ongelezen berichten</h2>
+      <ul className={"w-full"}>
+        {contactMessages
+          .filter((contactMessage) => !contactMessage.read)
+          .map((contactMessage) => (
+            <ContactMessage
+              key={contactMessage.id}
+              contactMessage={contactMessage}
+              admin
+            />
+          ))}
+      </ul>
+
+      <h2 className={"mb-5 text-lg font-bold"}>Alle berichten</h2>
       <ul className={"w-full"}>
         {contactMessages.map((contactMessage) => (
           <ContactMessage
