@@ -14,7 +14,7 @@ export default function AdminDashBoard() {
       </p>
       <p>
         Ongelezen{" "}
-        <Link className={"text-[-webkit-link]"} href={"admin/contactMessages"}>
+        <Link className={"text-[-webkit-link]"} href={"admin/contact-messages"}>
           contact berichten
         </Link>
         : &lt;number of products&gt;

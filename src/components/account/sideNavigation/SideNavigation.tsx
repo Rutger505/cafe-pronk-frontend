@@ -10,7 +10,7 @@ export default function SideNavigation() {
       <SideNavigationLink href="/account/reservations">
         Reservaties
       </SideNavigationLink>
-      <SideNavigationLink href="/account/contactMessages">
+      <SideNavigationLink href="/account/contact-messages">
         Contactberichten
       </SideNavigationLink>
     </nav>
