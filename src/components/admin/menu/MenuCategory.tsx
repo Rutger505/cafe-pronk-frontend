@@ -1,3 +1,5 @@
+"use client";
+
 import { CategoryData } from "@/MenuData";
 import MenuDish from "@/components/admin/menu/MenuDish";
 
