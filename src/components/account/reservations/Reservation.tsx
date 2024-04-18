@@ -2,10 +2,12 @@ import { ReservationData } from "@/app/account/reservations/page";
 
 interface ReservationProps {
   reservation: ReservationData;
+  admin?: boolean;
 }
 
 export default function Reservation({
   reservation,
+  admin = false,
 }: Readonly<ReservationProps>) {
   const reservationDateObject = new Date(reservation.date);
   const reservationDate = reservationDateObject.toLocaleDateString("nl-NL", {
@@ -20,7 +22,15 @@ export default function Reservation({
 
   return (
     <div className="mb-5 rounded-normal border-2 border-secondary p-6">
-      <p className="text-lg font-semibold">Reservation {reservation.id}</p>
+      <div className={"flex justify-between"}>
+        <p className="text-lg font-semibold">Reservation {reservation.id}</p>
+        {admin && (
+          <div>
+            <button className={"mr-3"}>Accepteer</button>
+            <button>Weiger</button>
+          </div>
+        )}
+      </div>
       <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
           <p className="mb-2 text-sm">Aantal personen: {reservation.people}</p>
@@ -32,22 +42,24 @@ export default function Reservation({
           )}
         </div>
         <div>
-          <p className="mb-2 text-sm">
-            Status:{" "}
-            <span
-              className={
-                !reservation.pending && !reservation.accepted
-                  ? "text-[#f00]"
-                  : ""
-              }
-            >
-              {reservation.pending
-                ? "In behandeling"
-                : reservation.accepted
-                  ? "Goed gekeurd"
-                  : "Geweigerd"}
-            </span>
-          </p>
+          {!admin && (
+            <p className="mb-2 text-sm">
+              Status:{" "}
+              <span
+                className={
+                  !reservation.pending && !reservation.accepted
+                    ? "text-[#f00]"
+                    : ""
+                }
+              >
+                {reservation.pending
+                  ? "In behandeling"
+                  : reservation.accepted
+                    ? "Goed gekeurd"
+                    : "Geweigerd"}
+              </span>
+            </p>
+          )}
         </div>
       </div>
     </div>
