@@ -1,4 +1,4 @@
-import { DishData } from "@/app/menu/page";
+import { DishData } from "@/MenuData";
 
 interface MenuItemProps {
   dish: DishData;

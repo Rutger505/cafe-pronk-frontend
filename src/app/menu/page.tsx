@@ -4,24 +4,7 @@ import { useRef, useState } from "react";
 import Basket from "@/components/menu/basket";
 import MenuList from "@/components/menu/menuList";
 import useHeightOnScreen from "@/hooks/useHeightOnScreen";
-
-export interface CategoryData {
-  id: number;
-  name: string;
-  dishes: DishData[];
-}
-
-export interface DishData {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-export interface BasketMenuItemData {
-  item: DishData;
-  quantity: number;
-}
+import { BasketMenuItemData, DishData } from "@/MenuData";
 
 export default function Menu() {
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);

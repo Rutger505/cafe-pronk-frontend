@@ -1,5 +1,5 @@
 import MenuDish from "./MenuDish";
-import { CategoryData, DishData } from "@/app/menu/page";
+import { CategoryData, DishData } from "@/MenuData";
 
 interface MenuCategoryProps {
   category: CategoryData;
