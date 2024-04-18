@@ -1,11 +1,13 @@
-import { ContactMessageData } from "@/app/account/contactMessages/page";
+import { ContactMessageData } from "@/ContactMessageData";
 
 interface ContactMessageProps {
   contactMessage: ContactMessageData;
+  admin?: boolean;
 }
 
 export default function ContactMessage({
   contactMessage,
+  admin,
 }: Readonly<ContactMessageProps>) {
   const createdAtObject = new Date(contactMessage.created_at);
   const createdAtDate = createdAtObject.toLocaleDateString("nl-NL", {
@@ -21,7 +23,14 @@ export default function ContactMessage({
   return (
     <div className={"mb-5 rounded-normal border-2 border-secondary p-6"}>
       <div>
-        <h2 className={"text-lg font-semibold"}>{contactMessage.subject}</h2>
+        <div className={"flex justify-between"}>
+          <h2
+            className={`text-lg ${admin && contactMessage.read ? "" : "font-semibold"}`}
+          >
+            {contactMessage.subject}
+          </h2>
+          {admin && <button>Markeer als gelezen</button>}
+        </div>
         <p className={"text-sm"}>
           Verstuurd op {createdAtDate} om {createdAtTime}
         </p>
