@@ -1,6 +1,7 @@
 import Link from "next/link";
 import HeaderLink from "./HeaderLink";
 import { Graduate } from "next/font/google";
+import AdminOnly from "@/components/header/AdminOnly";
 
 const graduate = Graduate({ subsets: ["latin"], weight: ["400"] });
 
@@ -22,7 +23,9 @@ export default function Header() {
         <HeaderLink href={"/reservations"}>Reserveren</HeaderLink>
         <HeaderLink href={"/contact"}>Contact</HeaderLink>
         <HeaderLink href={"/account"}>Account</HeaderLink>
-        <HeaderLink href={"/admin"}>Admin</HeaderLink>
+        <AdminOnly>
+          <HeaderLink href={"/admin"}>Admin</HeaderLink>
+        </AdminOnly>
       </div>
     </header>
   );
