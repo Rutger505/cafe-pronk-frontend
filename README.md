@@ -1,6 +1,6 @@
 # cafe-pronk-frontend
 
-School project, making a cafe. Frontend in Next.js, [backend api](https://github.com/Rutger505/cafe-pronk-backend/) in Laravel.
+School project, making Cafe Pronk. Frontend in Next.js, [backend api](https://github.com/Rutger505/cafe-pronk-backend/) in Laravel.
 
 ## Installation
 
