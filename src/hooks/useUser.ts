@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 type LoggedInUserData = {
@@ -17,11 +19,11 @@ export type UserData = LoggedInUserData | NotLoggedInUserData;
 export default function useUser(): null | UserData {
   const [user, setUser] = useState<null | UserData>(null);
 
-  const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/user`;
-  const token = localStorage.getItem("token");
-
   useEffect(() => {
     async function fetchUser() {
+      const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/user`;
+      const token = localStorage.getItem("token");
+
       if (!token) {
         setUser({ logged_in: false });
         return;
@@ -46,7 +48,7 @@ export default function useUser(): null | UserData {
     }
 
     fetchUser();
-  }, [apiUri, token]);
+  }, []);
 
   return user;
 }

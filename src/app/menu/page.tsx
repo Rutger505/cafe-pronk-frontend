@@ -1,17 +1,15 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Basket from "@/components/menu/basket";
 import MenuList from "@/components/menu/menuList";
 import useHeightOnScreen from "@/hooks/useHeightOnScreen";
 import { BasketMenuItemData, DishData } from "@/MenuData";
-import { usePersistedState } from "@/hooks/usePersistedState";
+import LoginContainer from "@/components/auth/LoginContainer";
 
 export default function Menu() {
-  const [cartItems, setCartItems] = usePersistedState<BasketMenuItemData[]>(
-    "cartItems",
-    [],
-  );
+  const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
+
   const listRef = useRef<HTMLDivElement>(null);
   const visibleListHeight = useHeightOnScreen(listRef);
 
@@ -84,6 +82,7 @@ export default function Menu() {
         onCheckout={onCheckout}
         height={visibleListHeight}
       />
+      <LoginContainer />
     </main>
   );
 }

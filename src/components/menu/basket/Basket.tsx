@@ -1,7 +1,7 @@
-import { BasketMenuItemData } from "@/app/menu/page";
 import TransferMethodSwitch from "./TransferMethodSwitch";
 import BasketItem from "./BasketItem";
 import Button from "@/components/Button";
+import { BasketMenuItemData } from "@/MenuData";
 
 interface BasketProps {
   height: number | undefined;
