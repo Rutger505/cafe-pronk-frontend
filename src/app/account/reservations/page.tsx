@@ -12,7 +12,7 @@ export interface ReservationData {
   updated_at: string;
 }
 
-export default function Reservations() {
+export default function UserReservations() {
   // demo reservations json
   const reservations: ReservationData[] = [
     {

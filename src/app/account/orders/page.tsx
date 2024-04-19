@@ -27,7 +27,7 @@ export interface DishData {
   position_index: number;
 }
 
-export default function Orders() {
+export default function UserOrders() {
   // demo order json
   const orders: OrderData[] = [
     {

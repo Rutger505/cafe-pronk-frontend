@@ -1,7 +1,7 @@
 import ContactMessage from "@/components/account/contactMessages/ContactMessage";
 import { ContactMessageData } from "@/ContactMessageData";
 
-export default function ContactMessages() {
+export default function UserContactMessages() {
   // demo contact messages json
   const contactMessages: ContactMessageData[] = [
     {
