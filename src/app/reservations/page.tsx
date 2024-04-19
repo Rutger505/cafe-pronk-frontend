@@ -1,15 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
+import axios from "axios";
+import LoginContainer from "@/components/auth/LoginContainer";
+import useUser from "@/hooks/useUser";
 
 export default function Reservations() {
-  const [formMessage, setFormMessage] = useState<string>("");
+  const [formMessage, setFormMessage] = useState("");
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [user, refreshUser] = useUser();
 
-  function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function onLoginSuccess() {
+    setLoginVisible(false);
+    refreshUser();
+  }
+
+  function onLoginClose() {
+    setLoginVisible(false);
+  }
+
+  async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!user?.logged_in) {
+      setLoginVisible(true);
+      return;
+    }
 
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name") as string;
@@ -17,21 +36,32 @@ export default function Reservations() {
     const dateTime = `${formData.get("date")} ${formData.get("time")}:00`;
     const comment = formData.get("comment") as string;
 
-    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/reservation/${name}/${amount}/${dateTime}/${comment}`;
+    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/reservations`;
 
-    console.log("Posting reservation to:", apiUri);
-    fetch(apiUri, { method: "POST" })
-      .then((response) => {
-        if (response.ok) {
-          setFormMessage("Reservering geplaatst");
-        } else {
-          setFormMessage("Er is iets misgegaan");
-        }
-      })
-      .catch((error) => {
-        console.error("Error posting reservation:", error);
-        setFormMessage("Er is iets misgegaan");
-      });
+    try {
+      const response = await axios.post(
+        apiUri,
+        {
+          party_size: amount,
+          datetime: dateTime,
+          name,
+          message: comment,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+
+      console.log(response.data);
+
+      setFormMessage("Reservering geplaatst");
+    } catch (error) {
+      console.error(error);
+      setFormMessage("Er ging iets mis met het plaatsen van de reservering");
+    }
   }
 
   return (
@@ -53,14 +83,7 @@ export default function Reservations() {
             <Input label={"Datum*"} id={"date"} type={"date"} required />
           </div>
           <div className={"flex flex-col"}>
-            <Input
-              label={"Tijd*"}
-              id={"time"}
-              type={"time"}
-              min={"16:00"}
-              max={"21:00"}
-              required
-            />
+            <Input label={"Tijd*"} id={"time"} type={"time"} required />
           </div>
         </div>
 
@@ -70,6 +93,13 @@ export default function Reservations() {
 
         <p>{formMessage}</p>
       </form>
+
+      {loginVisible && (
+        <LoginContainer
+          onLoginSuccess={onLoginSuccess}
+          onLoginClose={onLoginClose}
+        />
+      )}
     </main>
   );
 }

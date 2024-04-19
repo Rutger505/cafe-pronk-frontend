@@ -8,6 +8,7 @@ import { BasketMenuItemData, DishData } from "@/MenuData";
 import LoginContainer from "@/components/auth/LoginContainer";
 import useUser from "@/hooks/useUser";
 import axios from "axios";
+import { apiDateTimeFormat } from "@/utils";
 
 export default function Menu() {
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
@@ -81,14 +82,7 @@ export default function Menu() {
     const deliveryDate = new Date();
     deliveryDate.setMinutes(deliveryDate.getMinutes() + deliveryTime);
 
-    const year = deliveryDate.getFullYear();
-    const month = String(deliveryDate.getMonth() + 1).padStart(2, "0");
-    const day = String(deliveryDate.getDate()).padStart(2, "0");
-    const hours = String(deliveryDate.getHours()).padStart(2, "0");
-    const minutes = String(deliveryDate.getMinutes()).padStart(2, "0");
-    const seconds = String(deliveryDate.getSeconds()).padStart(2, "0");
-
-    const deliveryDateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    const deliveryDateString = apiDateTimeFormat(deliveryDate);
 
     const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/orders`;
     try {
