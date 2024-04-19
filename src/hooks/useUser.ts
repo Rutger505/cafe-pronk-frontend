@@ -8,6 +8,7 @@ type LoggedInUserData = {
   email: string;
   name: string;
   is_admin: number;
+  token: string;
 };
 
 type NotLoggedInUserData = {
@@ -39,7 +40,11 @@ export default function useUser(): null | UserData {
       const body = await response.json();
 
       if (response.ok) {
-        setUser(body);
+        setUser({
+          logged_in: true,
+          ...body,
+          token,
+        });
       } else {
         setUser({
           logged_in: false,
