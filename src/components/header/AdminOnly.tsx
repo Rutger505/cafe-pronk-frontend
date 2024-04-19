@@ -8,7 +8,7 @@ interface AdminOnlyProps {
 }
 
 export default function AdminOnly({ children }: AdminOnlyProps) {
-  const user = useUser();
+  const [user] = useUser();
 
   if (!user?.logged_in || !user?.is_admin) {
     return null;
