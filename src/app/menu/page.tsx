@@ -24,6 +24,10 @@ export default function Menu() {
     refreshUser();
   }
 
+  function onLoginClose() {
+    setLoginVisible(false);
+  }
+
   function onDeliveryTimeChange(newDeliveryTime: number) {
     setDeliveryTime(newDeliveryTime);
   }
@@ -136,7 +140,10 @@ export default function Menu() {
         height={visibleListHeight}
       />
       {loginVisible && (
-        <LoginContainer onLoginSuccess={() => setLoginVisible(false)} />
+        <LoginContainer
+          onLoginSuccess={onLoginSuccess}
+          onLoginClose={onLoginClose}
+        />
       )}
     </main>
   );

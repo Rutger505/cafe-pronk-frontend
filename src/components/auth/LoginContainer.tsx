@@ -9,10 +9,12 @@ enum AuthType {
 
 interface LoginContainerProps {
   onLoginSuccess: () => void;
+  onLoginClose: () => void;
 }
 
 export default function LoginContainer({
   onLoginSuccess,
+  onLoginClose,
 }: Readonly<LoginContainerProps>) {
   const [authType, setAuthType] = useState(AuthType.Login);
 
@@ -30,7 +32,7 @@ export default function LoginContainer({
         "fixed inset-0 flex items-center justify-center bg-[#000] bg-opacity-40"
       }
     >
-      <div className={"rounded-[4px] bg-primary p-14"}>
+      <div className={"relative rounded-[4px] bg-primary p-14"}>
         {authType === AuthType.Login ? (
           <Login
             onRedirectToRegister={onRedirectToRegister}
@@ -42,6 +44,10 @@ export default function LoginContainer({
             onRegisterSuccess={onLoginSuccess}
           />
         )}
+
+        <button className={"absolute right-5 top-5"} onClick={onLoginClose}>
+          ✖
+        </button>
       </div>
     </div>
   );
