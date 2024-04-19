@@ -1,10 +1,16 @@
+"use client";
+
 import Reservation from "@/components/account/reservations";
+import { useEffect, useState } from "react";
+import useUser from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export interface ReservationData {
   id: number;
   user_id: number;
   people: number;
-  date: string;
+  datetime: string;
   message: string | null;
   pending: number;
   accepted: number;
@@ -13,42 +19,32 @@ export interface ReservationData {
 }
 
 export default function UserReservations() {
-  // demo reservations json
-  const reservations: ReservationData[] = [
-    {
-      id: 1,
-      user_id: 2,
-      people: 2,
-      date: "2024-04-15 18:00",
-      message: null,
-      pending: 0,
-      accepted: 0,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-    {
-      id: 2,
-      user_id: 2,
-      people: 4,
-      date: "2024-04-16 19:00",
-      message: "We are celebrating a birthday!",
-      pending: 1,
-      accepted: 0,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-    {
-      id: 3,
-      user_id: 2,
-      people: 3,
-      date: "2024-04-16 19:00",
-      message: "",
-      pending: 0,
-      accepted: 1,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-  ];
+  const [reservations, setReservations] = useState<ReservationData[]>([]);
+  const [user] = useUser();
+  const { push } = useRouter();
+
+  if (user && !user.logged_in) {
+    push("/account");
+  }
+
+  useEffect(() => {
+    async function fetchReservations() {
+      if (!user?.logged_in) return;
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/reservations`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+
+      setReservations(response.data);
+    }
+
+    fetchReservations();
+  }, [user]);
 
   return (
     <main>

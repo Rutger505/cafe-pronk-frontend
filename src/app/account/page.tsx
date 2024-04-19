@@ -32,6 +32,7 @@ export default function AccountOverview() {
 
     if (!user?.logged_in) {
       setFormText("Er is iets fout gegaan. Probeer de pagina te herladen.");
+      return;
     }
 
     setFormText("");

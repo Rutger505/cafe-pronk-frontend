@@ -9,7 +9,7 @@ export default function Reservation({
   reservation,
   admin = false,
 }: Readonly<ReservationProps>) {
-  const reservationDateObject = new Date(reservation.date);
+  const reservationDateObject = new Date(reservation.datetime);
   const reservationDate = reservationDateObject.toLocaleDateString("nl-NL", {
     day: "2-digit",
     month: "2-digit",
