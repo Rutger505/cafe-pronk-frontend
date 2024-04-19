@@ -7,7 +7,13 @@ enum AuthType {
   Register,
 }
 
-export default function LoginContainer() {
+interface LoginContainerProps {
+  onLoginSuccess: () => void;
+}
+
+export default function LoginContainer({
+  onLoginSuccess,
+}: Readonly<LoginContainerProps>) {
   const [authType, setAuthType] = useState(AuthType.Login);
 
   function onRedirectToRegister() {
@@ -26,9 +32,15 @@ export default function LoginContainer() {
     >
       <div className={"rounded-[4px] bg-primary p-14"}>
         {authType === AuthType.Login ? (
-          <Login onRedirectToRegister={onRedirectToRegister} />
+          <Login
+            onRedirectToRegister={onRedirectToRegister}
+            onLoginSuccess={onLoginSuccess}
+          />
         ) : (
-          <Register onRedirectToLogin={onRedirectToLogin} />
+          <Register
+            onRedirectToLogin={onRedirectToLogin}
+            onRegisterSuccess={onLoginSuccess}
+          />
         )}
       </div>
     </div>
