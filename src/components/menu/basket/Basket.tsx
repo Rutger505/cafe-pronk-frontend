@@ -5,7 +5,9 @@ import { BasketMenuItemData } from "@/MenuData";
 
 interface BasketProps {
   height: number | undefined;
+  basketText: string;
   items: BasketMenuItemData[];
+  onDeliveryTimeChange: (newDeliveryTime: number) => void;
   onRemoveFromCart: (item: BasketMenuItemData) => void;
   onDecrementItem: (item: BasketMenuItemData) => void;
   onIncrementItem: (item: BasketMenuItemData) => void;
@@ -14,7 +16,9 @@ interface BasketProps {
 
 export default function Basket({
   height,
+  basketText,
   items,
+  onDeliveryTimeChange,
   onRemoveFromCart,
   onDecrementItem,
   onIncrementItem,
@@ -29,7 +33,7 @@ export default function Basket({
     >
       <h2 className={"my-5 text-center text-lg font-bold"}>Basket</h2>
 
-      <TransferMethodSwitch />
+      <TransferMethodSwitch onDeliveryTimeChange={onDeliveryTimeChange} />
 
       {items.length > 0 ? (
         <>
@@ -51,6 +55,7 @@ export default function Basket({
               .toFixed(2)}
             )
           </Button>
+          <p>{basketText}</p>
         </>
       ) : (
         <div className={"flex h-full flex-col items-center justify-center"}>

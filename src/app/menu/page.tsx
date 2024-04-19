@@ -6,16 +6,29 @@ import MenuList from "@/components/menu/menuList";
 import useHeightOnScreen from "@/hooks/useHeightOnScreen";
 import { BasketMenuItemData, DishData } from "@/MenuData";
 import LoginContainer from "@/components/auth/LoginContainer";
+import useUser from "@/hooks/useUser";
+import axios from "axios";
 
 export default function Menu() {
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [user, refreshUser] = useUser();
+  const [deliveryTime, setDeliveryTime] = useState<number>(40);
+  const [basketText, setBasketText] = useState("");
 
   const listRef = useRef<HTMLDivElement>(null);
   const visibleListHeight = useHeightOnScreen(listRef);
 
-  function addToCart(item: DishData) {
-    console.log("Added to cart:", JSON.stringify(item));
+  function onLoginSuccess() {
+    setLoginVisible(false);
+    refreshUser();
+  }
 
+  function onDeliveryTimeChange(newDeliveryTime: number) {
+    setDeliveryTime(newDeliveryTime);
+  }
+
+  function addToCart(item: DishData) {
     // Check if item is already in cart
     const existingCartItem = cartItems.find(
       (cartItem) => cartItem.item.id === item.id,
@@ -29,7 +42,6 @@ export default function Menu() {
   }
 
   function removeFromCart(item: BasketMenuItemData) {
-    console.log("Removed from cart:", JSON.stringify(item));
     setCartItems(cartItems.filter((cartItem) => cartItem !== item));
   }
 
@@ -48,19 +60,58 @@ export default function Menu() {
   }
 
   function onDecrementItem(item: BasketMenuItemData) {
-    console.log("Decremented item:", JSON.stringify(item));
     changeBasketItemQuantity(item, -1);
     return 1;
   }
 
   function onIncrementItem(item: BasketMenuItemData) {
-    console.log("Incremented item:", JSON.stringify(item));
     changeBasketItemQuantity(item, 1);
   }
 
-  function onCheckout() {
-    setCartItems([]);
-    alert("Checkout complete");
+  async function onCheckout() {
+    if (!user?.logged_in) {
+      setLoginVisible(true);
+      return;
+    }
+
+    const deliveryDate = new Date();
+    deliveryDate.setMinutes(deliveryDate.getMinutes() + deliveryTime);
+
+    const year = deliveryDate.getFullYear();
+    const month = String(deliveryDate.getMonth() + 1).padStart(2, "0");
+    const day = String(deliveryDate.getDate()).padStart(2, "0");
+    const hours = String(deliveryDate.getHours()).padStart(2, "0");
+    const minutes = String(deliveryDate.getMinutes()).padStart(2, "0");
+    const seconds = String(deliveryDate.getSeconds()).padStart(2, "0");
+
+    const deliveryDateString = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/orders`;
+    try {
+      const response = await axios.post(
+        apiUrl,
+        {
+          dishes: cartItems.map((item) => ({
+            id: item.item.id,
+            quantity: item.quantity,
+          })),
+          delivery_date: deliveryDateString,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+
+      setBasketText("");
+      setCartItems([]);
+      alert("Bestelling geplaatst!");
+    } catch (error) {
+      console.error("Failed to create order:", error);
+      setBasketText("Er is iets misgegaan bij het plaatsen van de bestelling.");
+    }
   }
 
   return (
@@ -76,13 +127,17 @@ export default function Menu() {
       </div>
       <Basket
         items={cartItems}
+        basketText={basketText}
+        onDeliveryTimeChange={onDeliveryTimeChange}
         onRemoveFromCart={removeFromCart}
         onDecrementItem={onDecrementItem}
         onIncrementItem={onIncrementItem}
         onCheckout={onCheckout}
         height={visibleListHeight}
       />
-      <LoginContainer />
+      {loginVisible && (
+        <LoginContainer onLoginSuccess={() => setLoginVisible(false)} />
+      )}
     </main>
   );
 }

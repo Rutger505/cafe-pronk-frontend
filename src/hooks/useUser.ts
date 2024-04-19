@@ -17,43 +17,46 @@ type NotLoggedInUserData = {
 
 export type UserData = LoggedInUserData | NotLoggedInUserData;
 
-export default function useUser(): null | UserData {
+async function fetchUser(): Promise<UserData> {
+  const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/user`;
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return { logged_in: false };
+  }
+
+  const response = await fetch(apiUri, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+  });
+
+  const body = await response.json();
+
+  if (response.ok) {
+    return {
+      logged_in: true,
+      ...body,
+      token,
+    };
+  } else {
+    return {
+      logged_in: false,
+    };
+  }
+}
+
+export default function useUser(): [UserData | null, () => void] {
   const [user, setUser] = useState<null | UserData>(null);
 
   useEffect(() => {
-    async function fetchUser() {
-      const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/user`;
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        setUser({ logged_in: false });
-        return;
-      }
-
-      const response = await fetch(apiUri, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      });
-
-      const body = await response.json();
-
-      if (response.ok) {
-        setUser({
-          logged_in: true,
-          ...body,
-          token,
-        });
-      } else {
-        setUser({
-          logged_in: false,
-        });
-      }
-    }
-
-    fetchUser();
+    fetchUser().then(setUser);
   }, []);
 
-  return user;
+  function refreshUser() {
+    fetchUser().then(setUser);
+  }
+
+  return [user, refreshUser];
 }
