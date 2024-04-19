@@ -1,37 +1,41 @@
+"use client";
+
 import ContactMessage from "@/components/account/contactMessages/ContactMessage";
 import { ContactMessageData } from "@/ContactMessageData";
+import { useEffect, useState } from "react";
+import useUser from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function UserContactMessages() {
-  // demo contact messages json
-  const contactMessages: ContactMessageData[] = [
-    {
-      id: 3,
-      user_id: 2,
-      name: "User",
-      business_name: null,
-      email: "user@email.com",
-      subject: "Question about reservation",
-      message:
-        "Hi, I have a question about the reservation process. How do I make a reservation?",
-      read: false,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-    {
-      id: 5,
-      user_id: 2,
-      name: "User",
-      business_name: "Barry bakt",
-      email: "user@email.com",
-      subject: "Question about reservation",
-      message:
-        "Hi, I have a question about the reservation process. How do I make a reservation?",
-      read: false,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-  ];
+  const [contactMessages, setContactMessages] = useState<ContactMessageData[]>(
+    [],
+  );
+  const [user] = useUser();
+  const { push } = useRouter();
 
+  if (user && !user.logged_in) {
+    push("/account");
+  }
+
+  useEffect(() => {
+    async function fetchContactMessages() {
+      if (!user?.logged_in) return;
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/reservations`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+
+      setContactMessages(response.data);
+    }
+
+    fetchContactMessages();
+  }, [user]);
   return (
     <main>
       <h1 className={"mb-10 text-center text-xl"}>Contact berichten</h1>
