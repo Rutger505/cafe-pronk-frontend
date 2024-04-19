@@ -1,4 +1,10 @@
+"use client";
+
 import Order from "@/components/account/orders/Order";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import useUser from "@/hooks/useUser";
+import { useRouter } from "next/navigation";
 
 export interface OrderData {
   id: number;
@@ -28,134 +34,33 @@ export interface DishData {
 }
 
 export default function UserOrders() {
-  // demo order json
-  const orders: OrderData[] = [
-    {
-      id: 1,
-      user_id: 2,
-      total_price: 30,
-      delivery_date: "2024-04-14 20:00:00",
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-      dishes: [
+  const [orders, setOrders] = useState<OrderData[]>([]);
+  const [user] = useUser();
+  const { push } = useRouter();
+
+  if (user && !user.logged_in) {
+    push("/account");
+  }
+
+  useEffect(() => {
+    async function fetchOrders() {
+      if (!user?.logged_in) return;
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/orders`,
         {
-          id: 1,
-          order_id: 1,
-          dish_id: 1,
-          quantity: 2,
-          dish: {
-            id: 1,
-            category_id: 1,
-            name: "Bitterballen",
-            description:
-              "Een heerlijke Nederlandse snack. Wordt geserveerd met mosterd.",
-            price: 5.5,
-            position_index: 1,
+          headers: {
+            Authorization: `Bearer ${user.token}`,
           },
         },
-        {
-          id: 2,
-          order_id: 1,
-          dish_id: 2,
-          quantity: 1,
-          dish: {
-            id: 2,
-            category_id: 1,
-            name: "Brood plank",
-            description:
-              "Een assortiment van vers brood geserveerd met verschillende dips en spreads, perfect als voorgerecht.",
-            price: 6.5,
-            position_index: 2,
-          },
-        },
-        {
-          id: 3,
-          order_id: 1,
-          dish_id: 3,
-          quantity: 3,
-          dish: {
-            id: 3,
-            category_id: 2,
-            name: "Pizza margherita",
-            description:
-              "Een klassieke Italiaanse pizza met tomatensaus, mozzarella en verse basilicum.",
-            price: 8.5,
-            position_index: 3,
-          },
-        },
-      ],
-    },
-    {
-      id: 2,
-      user_id: 2,
-      total_price: 30,
-      delivery_date: "2024-04-14 20:00:00",
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-      dishes: [
-        {
-          id: 5,
-          order_id: 1,
-          dish_id: 1,
-          quantity: 2,
-          dish: {
-            id: 1,
-            category_id: 1,
-            name: "Bitterballen",
-            description:
-              "Een heerlijke Nederlandse snack. Wordt geserveerd met mosterd.",
-            price: 5.5,
-            position_index: 1,
-          },
-        },
-        {
-          id: 6,
-          order_id: 1,
-          dish_id: 2,
-          quantity: 1,
-          dish: {
-            id: 2,
-            category_id: 1,
-            name: "Brood plank",
-            description:
-              "Een assortiment van vers brood geserveerd met verschillende dips en spreads, perfect als voorgerecht.",
-            price: 6.5,
-            position_index: 2,
-          },
-        },
-        {
-          id: 7,
-          order_id: 1,
-          dish_id: 3,
-          quantity: 3,
-          dish: {
-            id: 3,
-            category_id: 2,
-            name: "Pizza margherita",
-            description:
-              "Een klassieke Italiaanse pizza met tomatensaus, mozzarella en verse basilicum.",
-            price: 8.5,
-            position_index: 3,
-          },
-        },
-        {
-          id: 8,
-          order_id: 1,
-          dish_id: 3,
-          quantity: 3,
-          dish: {
-            id: 3,
-            category_id: 2,
-            name: "Sprite",
-            description:
-              "Een klassieke Italiaanse pizza met tomatensaus, mozzarella en verse basilicum.",
-            price: 3,
-            position_index: 3,
-          },
-        },
-      ],
-    },
-  ];
+      );
+
+      console.log(response.data);
+      setOrders(response.data);
+    }
+
+    fetchOrders();
+  }, [user]);
 
   return (
     <main>
