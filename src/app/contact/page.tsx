@@ -4,11 +4,14 @@ import { useState } from "react";
 import Input from "@/components/Input";
 import TextArea from "@/components/TextArea";
 import Button from "@/components/Button";
+import axios from "axios";
+import useUser from "@/hooks/useUser";
 
 export default function Contact() {
   const [formMessage, setFormMessage] = useState<string>("");
+  const [user] = useUser();
 
-  function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -18,21 +21,36 @@ export default function Contact() {
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
 
-    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/contact/${name}/${business}/${email}/${subject}/${message}`;
+    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/contact`;
 
-    console.log("Posting contact message to:", apiUri);
-    fetch(apiUri, { method: "POST" })
-      .then((response) => {
-        if (response.ok) {
-          setFormMessage("Bericht verstuurd");
-        } else {
-          setFormMessage("Er is iets misgegaan");
-        }
-      })
-      .catch((error) => {
-        console.error("Error posting contact:", error);
-        setFormMessage("Er is iets misgegaan");
-      });
+    const authHeader = user?.logged_in
+      ? { Authorization: `Bearer ${user.token}` }
+      : null;
+
+    try {
+      const response = await axios.post(
+        apiUri,
+        {
+          name,
+          business,
+          email,
+          subject,
+          message,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            ...authHeader,
+          },
+        },
+      );
+
+      setFormMessage(
+        "Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.",
+      );
+    } catch (error) {
+      setFormMessage("Er is iets fout gegaan. Probeer het later opnieuw.");
+    }
   }
 
   return (
