@@ -2,7 +2,7 @@ import Input from "@/components/Input";
 import Button from "@/components/Button";
 import DropDown from "@/components/DropDown";
 
-export default function CreateCategory() {
+export default function CreateDish() {
   const categories = [
     {
       id: 1,
