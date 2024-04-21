@@ -37,7 +37,7 @@ export default function Reservation({
   return (
     <div className="mb-5 rounded-normal border-2 border-secondary p-6">
       <div className={"flex justify-between"}>
-        <p className="text-lg font-semibold">Reservation {reservation.id}</p>
+        <p className="text-lg font-semibold">{reservation.name}</p>
         {admin && reservation.pending && (
           <div>
             <button className={"mr-3"} onClick={() => onAccept(reservation)}>
