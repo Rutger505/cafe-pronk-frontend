@@ -1,11 +1,12 @@
 export interface ReservationData {
   id: number;
   user_id: number;
-  people: number;
-  date: string;
+  name: string;
+  party_size: number;
+  datetime: string;
   message: string | null;
-  pending: number;
-  accepted: number;
+  pending: boolean;
+  accepted: boolean;
   created_at: string;
   updated_at: string;
 }

@@ -1,14 +1,28 @@
-import { ReservationData } from "@/app/account/reservations/page";
+import { ReservationData } from "@/ReservationData";
 
-interface ReservationProps {
+type NotAdminReservationProps = {
   reservation: ReservationData;
-  admin?: boolean;
-}
+  admin?: false;
+  onAccept?: null;
+  onReject?: null;
+};
+
+type AdminReservationProps = {
+  reservation: ReservationData;
+  admin: true;
+  onAccept: (reservation: ReservationData) => void;
+  onReject: (reservation: ReservationData) => void;
+};
+
+type ReservationProps = NotAdminReservationProps | AdminReservationProps;
 
 export default function Reservation({
   reservation,
-  admin = false,
+  admin,
+  onAccept,
+  onReject,
 }: Readonly<ReservationProps>) {
+  // Format reservation date and time
   const reservationDateObject = new Date(reservation.datetime);
   const reservationDate = reservationDateObject.toLocaleDateString("nl-NL", {
     day: "2-digit",
@@ -24,16 +38,20 @@ export default function Reservation({
     <div className="mb-5 rounded-normal border-2 border-secondary p-6">
       <div className={"flex justify-between"}>
         <p className="text-lg font-semibold">Reservation {reservation.id}</p>
-        {admin && (
+        {admin && reservation.pending && (
           <div>
-            <button className={"mr-3"}>Accepteer</button>
-            <button>Weiger</button>
+            <button className={"mr-3"} onClick={() => onAccept(reservation)}>
+              Accepteer
+            </button>
+            <button onClick={() => onReject(reservation)}>Weiger</button>
           </div>
         )}
       </div>
       <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <p className="mb-2 text-sm">Aantal personen: {reservation.people}</p>
+          <p className="mb-2 text-sm">
+            Aantal personen: {reservation.party_size}
+          </p>
           <p className="mb-2 text-sm">Datum: {reservationDate}</p>
           <p className="mb-2 text-sm">Tijd: {reservationTime}</p>
 

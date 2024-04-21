@@ -48,7 +48,12 @@ export default function ManageReservations() {
           .filter((reservation) => reservation.pending)
           .map((reservation) => (
             <li key={reservation.id}>
-              <Reservation reservation={reservation} admin />
+              <Reservation
+                reservation={reservation}
+                admin
+                onAccept={onAcceptReservation}
+                onReject={onRejectReservation}
+              />
             </li>
           ))}
       </ul>
