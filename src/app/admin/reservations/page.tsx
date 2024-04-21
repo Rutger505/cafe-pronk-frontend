@@ -1,43 +1,109 @@
+"use client";
+
 import Reservation from "@/components/account/reservations";
 import { ReservationData } from "@/ReservationData";
+import { useEffect, useState } from "react";
+import useUser from "@/hooks/useUser";
+import axios, { AxiosError } from "axios";
 
 export default function ManageReservations() {
-  // demo reservations json
-  const reservations: ReservationData[] = [
-    {
-      id: 1,
-      user_id: 2,
-      people: 2,
-      date: "2024-04-15 18:00",
-      message: null,
-      pending: 0,
-      accepted: 0,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-    {
-      id: 2,
-      user_id: 2,
-      people: 4,
-      date: "2024-04-16 19:00",
-      message: "We are celebrating a birthday!",
-      pending: 1,
-      accepted: 0,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-    {
-      id: 3,
-      user_id: 2,
-      people: 3,
-      date: "2024-04-16 19:00",
-      message: "",
-      pending: 0,
-      accepted: 1,
-      created_at: "2024-04-15T20:52:12.000000Z",
-      updated_at: "2024-04-15T20:52:12.000000Z",
-    },
-  ];
+  const [reservations, setReservations] = useState<ReservationData[]>([]);
+  const [user] = useUser();
+
+  useEffect(() => {
+    async function fetchReservations() {
+      if (!user?.logged_in) return;
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/reservations`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+
+      setReservations(response.data);
+    }
+
+    fetchReservations();
+  }, [user]);
+
+  async function onAcceptReservation(reservation: ReservationData) {
+    if (!user?.logged_in) {
+      console.error("User not logged in");
+      return;
+    }
+
+    console.log("Accepting reservation", reservation);
+
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/reservations/accept/${reservation.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+      setReservations((prevReservations) =>
+        prevReservations.map((prevReservation) =>
+          prevReservation.id === reservation.id
+            ? { ...prevReservation, pending: false, accepted: true }
+            : prevReservation,
+        ),
+      );
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error(
+          `Failed to accept reservation: ${error.response?.data.message}`,
+          error,
+        );
+      } else {
+        console.error(`Failed to accept reservation:`, error);
+      }
+      return;
+    }
+  }
+
+  async function onRejectReservation(reservation: ReservationData) {
+    if (!user?.logged_in) {
+      console.error("User not logged in");
+      return;
+    }
+
+    console.log("Rejecting reservation", reservation);
+
+    try {
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/reservations/decline/${reservation.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+      setReservations((prevReservations) =>
+        prevReservations.map((prevReservation) =>
+          prevReservation.id === reservation.id
+            ? { ...prevReservation, pending: false, accepted: false }
+            : prevReservation,
+        ),
+      );
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error(
+          `Failed to reject reservation: ${error.response?.data.message}`,
+          error,
+        );
+      } else {
+        console.error(`Failed to reject reservation:`, error);
+      }
+      return;
+    }
+  }
 
   return (
     <main>
