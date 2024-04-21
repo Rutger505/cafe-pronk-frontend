@@ -13,8 +13,6 @@ export default function AccountLayout({
   const [user] = useUser();
   const { push } = useRouter();
 
-  console.log(user);
-
   if (!user) {
     return null;
   }
