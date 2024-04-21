@@ -5,18 +5,7 @@ import { useEffect, useState } from "react";
 import useUser from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
-export interface ReservationData {
-  id: number;
-  user_id: number;
-  people: number;
-  datetime: string;
-  message: string | null;
-  pending: number;
-  accepted: number;
-  created_at: string;
-  updated_at: string;
-}
+import { ReservationData } from "@/ReservationData";
 
 export default function UserReservations() {
   const [reservations, setReservations] = useState<ReservationData[]>([]);
