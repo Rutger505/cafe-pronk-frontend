@@ -6,7 +6,7 @@ import useUser from "@/hooks/useUser";
 import LoginContainer from "@/components/auth/LoginContainer";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export default function AccountOverview() {
   const { push } = useRouter();
@@ -58,7 +58,7 @@ export default function AccountOverview() {
 
       console.log(response);
     } catch (error) {
-      if (error.response.status === 400) {
+      if (error instanceof AxiosError && error.status === 400) {
         setFormText("Ongeldige inloggegevens");
         return;
       }
