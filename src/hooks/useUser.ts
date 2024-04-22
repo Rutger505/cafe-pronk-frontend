@@ -7,7 +7,7 @@ type LoggedInUserData = {
   id: number;
   email: string;
   name: string;
-  is_admin: number;
+  is_admin: boolean;
   token: string;
 };
 
