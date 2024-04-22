@@ -1,6 +1,6 @@
 import { ReservationData } from "@/ReservationData";
 
-type NotAdminReservationProps = {
+type CustomerReservationProps = {
   reservation: ReservationData;
   admin?: false;
   onAccept?: null;
@@ -14,7 +14,7 @@ type AdminReservationProps = {
   onReject: (reservation: ReservationData) => void;
 };
 
-type ReservationProps = NotAdminReservationProps | AdminReservationProps;
+type ReservationProps = CustomerReservationProps | AdminReservationProps;
 
 export default function Reservation({
   reservation,

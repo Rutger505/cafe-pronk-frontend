@@ -1,13 +1,28 @@
 import { ContactMessageData } from "@/ContactMessageData";
 
-interface ContactMessageProps {
+type CustomerContactMessageProps = {
   contactMessage: ContactMessageData;
-  admin?: boolean;
-}
+  admin?: false;
+  onMarkAsRead?: null;
+  onMarkAsUnread?: null;
+};
+
+type AdminContactMessageProps = {
+  contactMessage: ContactMessageData;
+  admin: true;
+  onMarkAsRead: (contactMessage: ContactMessageData) => void;
+  onMarkAsUnread: (contactMessage: ContactMessageData) => void;
+};
+
+type ContactMessageProps =
+  | CustomerContactMessageProps
+  | AdminContactMessageProps;
 
 export default function ContactMessage({
   contactMessage,
   admin,
+  onMarkAsRead,
+  onMarkAsUnread,
 }: Readonly<ContactMessageProps>) {
   const createdAtObject = new Date(contactMessage.created_at);
   const createdAtDate = createdAtObject.toLocaleDateString("nl-NL", {
@@ -29,7 +44,16 @@ export default function ContactMessage({
           >
             {contactMessage.subject}
           </h2>
-          {admin && <button>Markeer als gelezen</button>}
+          {admin &&
+            (contactMessage.read ? (
+              <button onClick={() => onMarkAsUnread(contactMessage)}>
+                Markeer als ongelezen
+              </button>
+            ) : (
+              <button onClick={() => onMarkAsRead(contactMessage)}>
+                Markeer als gelezen
+              </button>
+            ))}
         </div>
         <p className={"text-sm"}>
           Verstuurd op {createdAtDate} om {createdAtTime}
