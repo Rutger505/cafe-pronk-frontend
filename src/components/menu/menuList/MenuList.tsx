@@ -1,8 +1,8 @@
-import { CategoryData, DishData } from "@/app/menu/page";
 import { ReactNode, useEffect, useState } from "react";
 import { LoadingList } from "@/components/menu/menuList/loading/LoadingList";
 import MenuCategory from "@/components/menu/menuList/MenuCategory";
 import SearchBar from "@/components/menu/SearchBar";
+import { CategoryData, DishData } from "@/MenuData";
 
 function filterCategories(categories: CategoryData[], searchQuery: string) {
   if (!searchQuery.trim()) return categories;

@@ -1,11 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import Input from "@/components/Input";
+import TextArea from "@/components/TextArea";
+import Button from "@/components/Button";
+import axios from "axios";
+import useUser from "@/hooks/useUser";
 
-export default function Reserveren() {
+export default function Contact() {
   const [formMessage, setFormMessage] = useState<string>("");
+  const [user] = useUser();
 
-  function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -15,21 +21,36 @@ export default function Reserveren() {
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
 
-    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/contact/${name}/${business}/${email}/${subject}/${message}`;
+    const apiUri = `${process.env.NEXT_PUBLIC_API_URL}/contact`;
 
-    console.log("Posting contact message to:", apiUri);
-    fetch(apiUri, { method: "POST" })
-      .then((response) => {
-        if (response.ok) {
-          setFormMessage("Bericht verstuurd");
-        } else {
-          setFormMessage("Er is iets misgegaan");
-        }
-      })
-      .catch((error) => {
-        console.error("Error posting contact:", error);
-        setFormMessage("Er is iets misgegaan");
-      });
+    const authHeader = user?.logged_in
+      ? { Authorization: `Bearer ${user.token}` }
+      : null;
+
+    try {
+      const response = await axios.post(
+        apiUri,
+        {
+          name,
+          business,
+          email,
+          subject,
+          message,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            ...authHeader,
+          },
+        },
+      );
+
+      setFormMessage(
+        "Bedankt voor uw bericht. We nemen zo snel mogelijk contact met u op.",
+      );
+    } catch (error) {
+      setFormMessage("Er is iets fout gegaan. Probeer het later opnieuw.");
+    }
   }
 
   return (
@@ -38,71 +59,21 @@ export default function Reserveren() {
 
       <form className={"flex max-w-md flex-col"} onSubmit={onFormSubmit}>
         <div className={"grid grid-cols-2 gap-x-4"}>
-          <label htmlFor="name">Naam*</label>
-          <label htmlFor="business">Bedrijf</label>
-
-          <input
-            className={
-              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-            }
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Naam"
-            required
-          />
-          <input
-            className={
-              "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-            }
-            type="text"
-            id="business"
-            name="business"
-            placeholder="Bedrijf"
-          />
+          <div className={"flex flex-col"}>
+            <Input label={"Naam*"} id={"name"} required />
+          </div>
+          <div className={"flex flex-col"}>
+            <Input label={"Bedrijf"} id={"business"} />
+          </div>
         </div>
 
-        <label htmlFor={"email"}>Email*</label>
-        <input
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-          }
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Email"
-          required
-        />
+        <Input label={"Email*"} type={"email"} id={"email"} required />
 
-        <label htmlFor={"subject"}>Onderwerp*</label>
-        <input
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-4 py-2"
-          }
-          type="text"
-          id="subject"
-          name="subject"
-          placeholder="Onderwerp"
-          required
-        />
+        <Input label={"Onderwerp*"} id={"subject"} required />
 
-        <label htmlFor="message">Bericht*</label>
-        <textarea
-          className={
-            "mb-5 rounded-normal border-[1px] border-tertiary px-3 py-2"
-          }
-          id="message"
-          name="message"
-          placeholder="Bericht"
-          required
-        />
+        <TextArea label={"Bericht*"} id={"message"} required />
 
-        <button
-          className={"rounded-button bg-accent px-4 py-2 text-primary"}
-          type="submit"
-        >
-          Reserveren
-        </button>
+        <Button>Reserveren</Button>
         <p>{formMessage}</p>
       </form>
     </main>

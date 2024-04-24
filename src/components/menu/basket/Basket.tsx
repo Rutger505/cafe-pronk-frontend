@@ -1,11 +1,13 @@
-import { BasketMenuItemData } from "@/app/menu/page";
 import TransferMethodSwitch from "./TransferMethodSwitch";
 import BasketItem from "./BasketItem";
-import BasketCheckoutButton from "./BasketCheckoutButton";
+import Button from "@/components/Button";
+import { BasketMenuItemData } from "@/MenuData";
 
 interface BasketProps {
   height: number | undefined;
+  basketText: string;
   items: BasketMenuItemData[];
+  onDeliveryTimeChange: (newDeliveryTime: number) => void;
   onRemoveFromCart: (item: BasketMenuItemData) => void;
   onDecrementItem: (item: BasketMenuItemData) => void;
   onIncrementItem: (item: BasketMenuItemData) => void;
@@ -14,7 +16,9 @@ interface BasketProps {
 
 export default function Basket({
   height,
+  basketText,
   items,
+  onDeliveryTimeChange,
   onRemoveFromCart,
   onDecrementItem,
   onIncrementItem,
@@ -29,7 +33,7 @@ export default function Basket({
     >
       <h2 className={"my-5 text-center text-lg font-bold"}>Basket</h2>
 
-      <TransferMethodSwitch />
+      <TransferMethodSwitch onDeliveryTimeChange={onDeliveryTimeChange} />
 
       {items.length > 0 ? (
         <>
@@ -44,13 +48,14 @@ export default function Basket({
               />
             ))}
           </ul>
-          <BasketCheckoutButton
-            price={items.reduce(
-              (acc, item) => acc + item.item.price * item.quantity,
-              0,
-            )}
-            onCheckout={onCheckout}
-          />
+          <Button onClick={onCheckout} className={"w-full font-bold"}>
+            Checkout (€
+            {items
+              .reduce((acc, item) => acc + item.item.price * item.quantity, 0)
+              .toFixed(2)}
+            )
+          </Button>
+          <p>{basketText}</p>
         </>
       ) : (
         <div className={"flex h-full flex-col items-center justify-center"}>

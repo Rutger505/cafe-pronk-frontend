@@ -11,7 +11,7 @@ const config: Config = {
       primary: "#FFFFFF",
       secondary: "#EBE9E8",
       tertiary: "#242E30",
-      accent: "#01001C",
+      accent: "#000",
     },
     fontSize: {
       xs: "14px",

@@ -4,33 +4,36 @@ import { useRef, useState } from "react";
 import Basket from "@/components/menu/basket";
 import MenuList from "@/components/menu/menuList";
 import useHeightOnScreen from "@/hooks/useHeightOnScreen";
-
-export interface CategoryData {
-  id: number;
-  name: string;
-  dishes: DishData[];
-}
-
-export interface DishData {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-}
-
-export interface BasketMenuItemData {
-  item: DishData;
-  quantity: number;
-}
+import { BasketMenuItemData, DishData } from "@/MenuData";
+import LoginContainer from "@/components/auth/LoginContainer";
+import useUser from "@/hooks/useUser";
+import axios from "axios";
+import { apiDateTimeFormat } from "@/utils";
 
 export default function Menu() {
   const [cartItems, setCartItems] = useState<BasketMenuItemData[]>([]);
+  const [loginVisible, setLoginVisible] = useState(false);
+  const [user, refreshUser] = useUser();
+  const [deliveryTime, setDeliveryTime] = useState<number>(40);
+  const [basketText, setBasketText] = useState("");
+
   const listRef = useRef<HTMLDivElement>(null);
   const visibleListHeight = useHeightOnScreen(listRef);
 
-  function addToCart(item: DishData) {
-    console.log("Added to cart:", JSON.stringify(item));
+  function onLoginSuccess() {
+    setLoginVisible(false);
+    refreshUser();
+  }
 
+  function onLoginClose() {
+    setLoginVisible(false);
+  }
+
+  function onDeliveryTimeChange(newDeliveryTime: number) {
+    setDeliveryTime(newDeliveryTime);
+  }
+
+  function addToCart(item: DishData) {
     // Check if item is already in cart
     const existingCartItem = cartItems.find(
       (cartItem) => cartItem.item.id === item.id,
@@ -44,7 +47,6 @@ export default function Menu() {
   }
 
   function removeFromCart(item: BasketMenuItemData) {
-    console.log("Removed from cart:", JSON.stringify(item));
     setCartItems(cartItems.filter((cartItem) => cartItem !== item));
   }
 
@@ -63,19 +65,51 @@ export default function Menu() {
   }
 
   function onDecrementItem(item: BasketMenuItemData) {
-    console.log("Decremented item:", JSON.stringify(item));
     changeBasketItemQuantity(item, -1);
     return 1;
   }
 
   function onIncrementItem(item: BasketMenuItemData) {
-    console.log("Incremented item:", JSON.stringify(item));
     changeBasketItemQuantity(item, 1);
   }
 
-  function onCheckout() {
-    setCartItems([]);
-    alert("Checkout complete");
+  async function onCheckout() {
+    if (!user?.logged_in) {
+      setLoginVisible(true);
+      return;
+    }
+
+    const deliveryDate = new Date();
+    deliveryDate.setMinutes(deliveryDate.getMinutes() + deliveryTime);
+
+    const deliveryDateString = apiDateTimeFormat(deliveryDate);
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/orders`;
+    try {
+      const response = await axios.post(
+        apiUrl,
+        {
+          dishes: cartItems.map((item) => ({
+            id: item.item.id,
+            quantity: item.quantity,
+          })),
+          delivery_date: deliveryDateString,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        },
+      );
+
+      setBasketText("");
+      setCartItems([]);
+      alert("Bestelling geplaatst!");
+    } catch (error) {
+      console.error("Failed to create order:", error);
+      setBasketText("Er is iets misgegaan bij het plaatsen van de bestelling.");
+    }
   }
 
   return (
@@ -91,12 +125,20 @@ export default function Menu() {
       </div>
       <Basket
         items={cartItems}
+        basketText={basketText}
+        onDeliveryTimeChange={onDeliveryTimeChange}
         onRemoveFromCart={removeFromCart}
         onDecrementItem={onDecrementItem}
         onIncrementItem={onIncrementItem}
         onCheckout={onCheckout}
         height={visibleListHeight}
       />
+      {loginVisible && (
+        <LoginContainer
+          onLoginSuccess={onLoginSuccess}
+          onLoginClose={onLoginClose}
+        />
+      )}
     </main>
   );
 }

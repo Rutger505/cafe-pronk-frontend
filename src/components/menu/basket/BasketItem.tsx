@@ -1,4 +1,4 @@
-import { BasketMenuItemData } from "@/app/menu/page";
+import { BasketMenuItemData } from "@/MenuData";
 
 interface BasketMenuItemProps {
   basketItem: BasketMenuItemData;
